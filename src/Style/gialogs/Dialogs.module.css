@@ -1,0 +1,27 @@
+.dialogModule{
+    display: grid;
+    grid-template-columns:  2fr 10fr;
+}
+
+.dialogsItem{
+    padding: 10px;
+
+}
+
+.dialog{
+    padding: 2px;
+}
+
+.dialog a{
+    text-decoration: none;
+}
+
+
+
+.messages{
+    padding: 10px;
+}
+
+.message{
+    padding: 2px;
+}
