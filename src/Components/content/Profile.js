@@ -4,6 +4,18 @@ import Post from "./Post";
 
 
 const Profile = () => {
+
+    let ollPostArray = [
+        {id: 1, post: 'Hello Pes', likes: 234},
+        {id: 2, post: 'This is first React project', likes: 1},
+        {id: 3, post: 'I am lus', likes: 941},
+        {id: 4, post: 'This is bad idea', likes: 6},
+        {id: 5, post: 'I know((', likes: 23},
+        {id: 6, post: 'oh no', likes: 1}
+    ];
+
+    let ollPostElement = ollPostArray.map(p =>   <Post message={p.post} like={p.likes}/>);
+
     return (
         <div className={pm.item}>
             <div className={pm.logoImage}>
@@ -23,11 +35,8 @@ const Profile = () => {
                     </div>
 
                 </div>
-                <Post message='Hi, how are you?' like='32'/>
-                <Post message='this is my first post' like='234'/>
-                <Post message='Props it very god' like='1'/>
-                <Post message='o Kurva' like='9999'/>
-
+                {ollPostElement}
+                {/*<Post message={ollPostArray[0].post} like={ollPostArray[0].likes}/>*/}
             </div>
 
         </div>
