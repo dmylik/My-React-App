@@ -13,3 +13,22 @@
 .item a.active {
     color: gold;
 }
+
+.ollfrainds{
+    display: table;
+}
+
+.navfriends{
+    display: table-cell;
+    padding: 1px 6px 1px 6px;
+}
+
+.navfriends img{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.nameFriend{
+
+}

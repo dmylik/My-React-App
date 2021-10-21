@@ -4,13 +4,24 @@ import Post from "./Post";
 
 
 const Profile = (props) => {
-    let ollPostArray = props.ollPost;
-    let ollPostElement = ollPostArray.map(p =>   <Post message={p.post} like={p.likes}/>);
+    let ollPostElement = props.ollPost.postArray.map(p =>
+        <Post message={p.post} like={p.likes}/>);
+
+    let newPostElement = React.createRef();
+
+    let addPost = ()=> {
+        props.addPost();}
+
+    let onPostChange = ()=>{
+        debugger;
+        let textNew = newPostElement.current.value;
+        props.upTxtP(textNew);
+    };
 
     return (
         <div className={pm.item}>
             <div className={pm.logoImage}>
-                <img src='https://img4.goodfon.ru/original/1920x1200/5/8f/ford-mustang-boss-302-muscle-classic-1969.jpg'></img>
+                <img src='https://img4.goodfon.ru/original/1920x1200/5/8f/ford-mustang-boss-302-muscle-classic-1969.jpg'/>
             </div>
             <div>
                 ProfileInfo
@@ -19,10 +30,10 @@ const Profile = (props) => {
                 <h3>My Post</h3>
                 <div className={pm.addPost}>
                     <div>
-                        <textarea></textarea>
+                        <textarea ref={newPostElement} onChange={onPostChange}/>
                     </div>
                     <div>
-                        <button>Add Post</button>
+                        <button onClick={addPost}>Add Post</button>
                     </div>
                 </div>
                 {ollPostElement}
