@@ -10,12 +10,15 @@ const Profile = (props) => {
     let newPostElement = React.createRef();
 
     let addPost = ()=> {
-        props.addPost();}
+        props.dispatch({type: 'ADD-POST'});
+        // props.addPost();
+    };
 
-    let onPostChange = ()=>{
-        debugger;
-        let textNew = newPostElement.current.value;
-        props.upTxtP(textNew);
+    let onPostChange = () => {
+        let text = newPostElement.current.value;
+        let action1 = {type: 'UPDATE-NEW-POST-TEXT', textNew: text};
+        props.dispatch (action1);
+        // props.upTxtP(textNew);
     };
 
     return (

@@ -23,8 +23,7 @@ const App = (props) => {
                                                                 ollDialogs = {props.state.messagesPage.dialogsArray}/>} />
 
                     <Route path='/profile' render={()=><Profile ollPost={props.state.profilePage}
-                                                                addPost={props.addPost}
-                                                                upTxtP={props.upTxtP}/>} />
+                                                                dispatch={props.dispatch}/>} />
                 </div>
             </div>
         </BrowserRouter>

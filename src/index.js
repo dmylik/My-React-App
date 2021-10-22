@@ -3,19 +3,14 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
 import App from "./App";
-import {addPost, subscribe, upTxtP} from "./redux/state";
-import state from './redux/state'
+// import {addPost, subscribe, upTxtP} from "./redux/state";
+import store from './redux/state'
 
 
-let rerenderEntireTree = (state)=> {
+let rerenderEntireTree = ()=> {
     ReactDOM.render(
         <React.StrictMode>
-
-            <App state={state}
-                 addPost={addPost}
-                 upTxtP={upTxtP}/>
-
-
+            <App state={store.getState()} dispatch={store.dispatch.bind(store)}/>
         </React.StrictMode>,
         document.getElementById('root')
     );
@@ -23,9 +18,9 @@ let rerenderEntireTree = (state)=> {
 
 
 
-rerenderEntireTree(state);
+rerenderEntireTree(store.getState());
 
-subscribe(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
