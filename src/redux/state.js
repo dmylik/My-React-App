@@ -1,7 +1,11 @@
+import profileReducer from "./reducers/profile-reducer";
+import dialogsReducer from "./reducers/dialogs-reducer";
+
+// Store  (BLL) данные для отрисовки UI
 
 let store = {
     //Приватные данные
-     _state: {
+    _state: {
         profilePage: {
             postArray: [
                 {id: 1, post: 'Hello Pes', likes: 234},
@@ -10,7 +14,7 @@ let store = {
                 {id: 4, post: 'This is bad idea', likes: 6},
                 {id: 5, post: 'I know((', likes: 23},
                 {id: 6, post: 'oh no', likes: 1}],
-            newPostText: ' '
+            newPostText: ' ',
         },
 
         messagesPage: {
@@ -24,11 +28,12 @@ let store = {
                 {if: 7, name: 'Leha'}],
 
             messagesArray: [
-                {message: 'Hello Pes'},
-                {message: 'How Are you'},
-                {message: 'I am bad'},
-                {message: 'Yo'},
-                {message: 'Yo'}]
+                {id: 1, message: 'Hello Pes'},
+                {id: 2, message: 'How Are you'},
+                {id: 3, message: 'I am bad'},
+                {id: 4, message: 'Yo'},
+                {id: 5, message: 'Yo'}],
+            newMessageBody: ' '
         },
 
         navPage: {
@@ -38,36 +43,23 @@ let store = {
                 {nameFriend: 'Emilia'}]
         }
     },
-    _rerenderEntireTree(){console.log('State')},
-    // не изменяющие функции
-    subscribe (observer) {this._rerenderEntireTree = observer},
-    getState() {return this._state;},
-    //Приватные функции
-    _addPost() {
-        let newPost = {
-            id: 7,
-            post: this._state.profilePage.newPostText,
-            likes: 0
-        };
-
-        this._state.profilePage.postArray.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._rerenderEntireTree(this._state);
+    //переотрисовка UI
+    _rerenderEntireTree() {
+        console.log('State')
     },
-    _upTxtP (newText) {
-        this._state.profilePage.newPostText = newText;
-        this._rerenderEntireTree(this._state);
+    subscribe(observer) {
+        this._rerenderEntireTree = observer
+    },
+    //Возврат state
+    getState() {
+        return this._state;
     },
 
-    dispatch (action) {
-         if(action.type ==='ADD-POST')
-             this._addPost();
-         else if(action.type === 'UPDATE-NEW-POST-TEXT')
-             this._upTxtP(action.textNew);
-         else alert("Errrror");
-
+    // обработка приходимых данный (ввод текста, нажате клавиши)
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.messagesPage =  dialogsReducer(this._state.messagesPage, action);
+        this._rerenderEntireTree(this._state);
     }
-
-}
-
+};
 export default store;
