@@ -1,23 +1,22 @@
 import React from 'react'
 import dm from '../../Style/gialogs/Dialogs.module.css'
 import {NavLink} from "react-router-dom";
-import pm from "../../Style/content/Profile.module.css";
-import {sendMessageCreator, updateNewMessageTexeCreator} from "../../redux/reducers/dialogs-reducer";
 
-
-
+// Презентационная (функциональная) компонента
 const Dialogs = (props) => {
-    let dialogsArray = props.state.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id}/>);
-    let messagesElemrnt = props.state.messagesArray.map(m =>  <Message message={m.message}/> );
-    let newMessageBody =  props.state.newMessageBody;
+    let dialogsArray = props.ollMess.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id}/>);
+    let messagesElemrnt = props.ollMess.messagesArray.map(m =>  <Message message={m.message}/> );
+    let newMessageBody =  props.newMessageBody;
 
     let onSendMessageClick = ()=> {
-        props.dispatch(sendMessageCreator())
+        props.sendMessage();
+        // props.dispatch(sendMessageCreator())
     };
 
     let newMessageElement = (e) =>{
         let body = e.target.value;
-        props.dispatch(updateNewMessageTexeCreator(body))
+        props.updateNewMesBody(body);
+        // props.dispatch(updateNewMessageTexeCreator(body));
     };
 
     return (
@@ -58,7 +57,6 @@ const DialogItem = (props) => {
 const Message = (props) => {
     return (
         <div className={dm.message}>{props.message}</div>
-
     )
 }
 
