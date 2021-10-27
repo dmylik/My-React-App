@@ -18,24 +18,20 @@ let initialState = {
 //action - набор всех возможных команд
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST: {
+        case ADD_POST:
             let newPost = {
                 id: 7,
                 post: state.newPostText,
                 likes: 0
             };
-            let stateCopy = {...state};
-
-            stateCopy.postArray =[...state.postArray];
-
-            stateCopy.postArray.push(newPost);
-
-            stateCopy.newPostText = '';
-            return stateCopy;}
-        case UPDATE_NEW_POST_TEXT:{
-            let stateCopy = {...state};
-            stateCopy.newPostText = action.textPostNew;
-            return stateCopy;}
+            return {
+                ...state,
+                postArray: [...state.postArray, newPost],
+                newPostText: ''};
+        case UPDATE_NEW_POST_TEXT:
+            // возвращение копии state и при этом в newPostText запиывается
+            //данные из обекта action (dispatch()) с отрибутом textPostNew
+            return {...state, newPostText: action.textPostNew};
         default:
             return state;
     }

@@ -1,10 +1,9 @@
-import React from 'react'
-import nm from '../Style/Nav.module.css'
+import React from 'react';
+import nm from '../../Style/Nav.module.css';
 import {NavLink} from "react-router-dom";
 
-
-const Navbar = (props) => {
-    let treeFr = props.navFr.map(f => <NavFriends name={f.nameFriend}/>)
+const Nav = (props) => {
+    let treeFr = props.navPage.navFriends.map(f => <NavFriends name={f.nameFriend} key ={f.id}/>);
 
     return (
         <nav className={nm.nav}>
@@ -25,7 +24,7 @@ const Navbar = (props) => {
             </div>
         </nav>
     )
-}
+};
 
 const NavFriends =(props)=>{
     return (
@@ -35,6 +34,6 @@ const NavFriends =(props)=>{
         </div>
 
     )
-}
+};
 
-export default Navbar
+export default Nav

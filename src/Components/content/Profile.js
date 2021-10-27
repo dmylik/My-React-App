@@ -4,7 +4,7 @@ import Post from "./Post";
 
 // Презентационная (функциональная) компонента
 const Profile = (props) => {
-    let ollPostElement = props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes}/>);
+    let ollPostElement = props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes} key ={p.id}/>);
     let newPostElement = props.newPostText;
 
     let onAddPost = ()=> {

@@ -26,20 +26,31 @@ let initialState = {
 //state - только для себя (messagesPage) и
 //action - набор всех возможных команд
 const dialogsReducer = (state = initialState, action) => {
+
+    let stateCopy ;
+
+
+
     switch (action.type) {
-        case SEND_MESSAGE: {
-            let stateCopy = {...state};
-            let body = stateCopy.newMessageBody;
-            stateCopy.messagesArray = [...state.messagesArray];
-            stateCopy.messagesArray.push({id: 6, message: body});
-            stateCopy.newMessageBody = '';
+        case SEND_MESSAGE:
+            let body = state.newMessageBody;
+            stateCopy = {
+                ...state,
+                messagesArray: [...state.messagesArray, {id: 6, message: body}],
+                newMessageBody:  ''
+            };
+            // stateCopy.messagesArray.push({id: 6, message: body});
+            // stateCopy.newMessageBody = '';
+            return stateCopy;
 
-            return stateCopy;}
-
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            let stateCopy = {...state};
-            stateCopy.newMessageBody = action.textMessageNew;
-            return stateCopy;}
+        case UPDATE_NEW_MESSAGE_TEXT:
+            //можно сразу возвращать объект
+            return  {
+                ...state,
+                newMessageBody: action.textMessageNew
+            };
+            // stateCopy.newMessageBody = action.textMessageNew;
+            // return stateCopy;
         default:
             return state;
     }

@@ -4,9 +4,9 @@ import {NavLink} from "react-router-dom";
 
 // Презентационная (функциональная) компонента
 const Dialogs = (props) => {
-    let dialogsArray = props.ollMess.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id}/>);
-    let messagesElemrnt = props.ollMess.messagesArray.map(m =>  <Message message={m.message}/> );
-    let newMessageBody =  props.newMessageBody;
+    let dialogsArray = props.ollMess.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
+    let messagesElemrnt = props.ollMess.messagesArray.map(m =>  <Message message={m.message} key ={m.id}/> );
+    let newMessageBody =  props.ollMess.newMessageBody;
 
     let onSendMessageClick = ()=> {
         props.sendMessage();

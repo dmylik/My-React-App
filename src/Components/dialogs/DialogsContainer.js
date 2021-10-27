@@ -46,10 +46,7 @@ import {connect} from "react-redux";
 // };
 
 let mapStateToProps = (state) =>{
-    return {
-        newMessageBody: state.messagesPage.newMessageBody,
-        ollMess: state.messagesPage
-    }
+    return { ollMess: state.messagesPage}
 };
 
 let mapDispatchToProps =(dispatch) =>{
