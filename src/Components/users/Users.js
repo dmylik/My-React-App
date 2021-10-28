@@ -1,52 +1,64 @@
 import React from 'react'
 import styleUM from './style/Users.module.css'
+import * as axios from "axios";
+import userPhoto from '../../assets/photo/user1.png'
+import userPhotoE from '../../assets/photo/photoElizabetOlsen.jpg'
 
+// Функциональная (Контейнерная) компанента
 let Users = (props) => {
+    let imageElizabetURL = 'https://img1.goodfon.ru/original/960x854/d/36/elizabet-olsen-elizabeth-3196.jpg';
+    // Side  Effect
+    let getUsers = () => {
+        // проверка на наличие в масиве данных
+        if (props.users.length === 0) {
+            // axion запросы с json данных
+            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                props.setUsers(response.data.items);
+            });
 
-    // проверка на наличие в масиве данных
-    if (props.users.length === 0) {
-        let imageElizabetURL = 'https://img1.goodfon.ru/original/960x854/d/36/elizabet-olsen-elizabeth-3196.jpg';
-        props.setUsers([
-            {
-                id: 1,
-                photoURL: imageElizabetURL,
-                followed: false,
-                fullName: 'Dima M',
-                status: 'I am a Bigg Boss',
-                location: {city: 'Brest', country: 'VKL'}
-            },
-            {
-                id: 2,
-                photoURL: imageElizabetURL,
-                followed: true,
-                fullName: 'Stas P',
-                status: 'I am a Lus',
-                location: {city: 'Moscow', country: 'USSR'}
-            },
-            {
-                id: 3,
-                photoURL: imageElizabetURL,
-                followed: true,
-                fullName: 'Dmitry Z',
-                status: 'I am a broser',
-                location: {city: 'Minsk', country: 'VKL'}
-            },
-            {
-                id: 4,
-                photoURL: imageElizabetURL,
-                followed: false,
-                fullName: 'Koly N',
-                status: 'I am a fraend',
-                location: {city: 'Kiev', country: 'Ukraine'}
-            }
-        ]);
-    }
+            // props.setUsers([
+            //     {
+            //         id: 1,
+            //         photoURL: imageElizabetURL,
+            //         followed: false,
+            //         name: 'Dima M',
+            //         status: 'I am a Bigg Boss',
+            //         location: {city: 'Brest', country: 'VKL'}
+            //     },
+            //     {
+            //         id: 2,
+            //         photoURL: imageElizabetURL,
+            //         followed: true,
+            //         name: 'Stas P',
+            //         status: 'I am a Lus',
+            //         location: {city: 'Moscow', country: 'USSR'}
+            //     },
+            //     {
+            //         id: 3,
+            //         photoURL: imageElizabetURL,
+            //         followed: true,
+            //         name: 'Dmitry Z',
+            //         status: 'I am a broser',
+            //         location: {city: 'Minsk', country: 'VKL'}
+            //     },
+            //     {
+            //         id: 4,
+            //         photoURL: imageElizabetURL,
+            //         followed: false,
+            //         name: 'Koly N',
+            //         status: 'I am a fraend',
+            //         location: {city: 'Kiev', country: 'Ukraine'}
+            //     }
+            // ]);
+        }
+    };
     return <div>
+        <button onClick={getUsers}>Get Users</button>
         {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div className={styleUM.userImage}>
-                        <img src={u.photoURL}/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhotoE}/>
                     </div>
                     <div>
                         {u.followed
@@ -65,12 +77,12 @@ let Users = (props) => {
                 </span>
                 <span>
                     <span>
-                        <div>{u.fullName}</div>
+                        <div>{u.name}</div>
                         <div>{u.status} </div>
                     </span>
                     <span>
-                        <div>{u.location.country}</div>
-                        <div>{u.location.city}</div>
+                        <div>{"u.location.country"}</div>
+                        <div>{"u.location.city"}</div>
                     </span>
                 </span>
             </div>)

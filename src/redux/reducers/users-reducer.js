@@ -3,7 +3,13 @@ const UN_FOLLOW = 'UN-FOLLOW';
 const SET_USERS = 'SET-USERS';
 
 //Инициализация данных по умолчанию пока не были переданный другие данные
-let initialState = {users: []};
+let initialState = {
+    users: [],
+    pageSize: 5,
+    totalCount: 0,
+    currentPage: 1
+
+};
 
 //Reducer для диалогов, принимает:
 //state - только для себя (profilePage) и

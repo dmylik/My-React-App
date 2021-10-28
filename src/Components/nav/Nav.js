@@ -1,6 +1,7 @@
 import React from 'react';
 import nm from '../../Style/Nav.module.css';
 import {NavLink} from "react-router-dom";
+import NavFriends from "./navFriends/NavFriends";
 
 const Nav = (props) => {
     let treeFr = props.navPage.navFriends.map(f => <NavFriends name={f.nameFriend} key ={f.id}/>);
@@ -10,6 +11,7 @@ const Nav = (props) => {
             <div>
                 <div className={nm.item}><NavLink to="/profile" activeClassName={nm.active}>Profile</NavLink></div>
                 <div className={nm.item}><NavLink to="/dialogs" activeClassName={nm.active}>Message</NavLink></div>
+                <div className={nm.item}><NavLink to="/users" activeClassName={nm.active}>Friends</NavLink></div>
                 <div className={nm.item}><NavLink to="/news" activeClassName={nm.active}>News </NavLink></div>
                 <div className={nm.item}><NavLink to="/music" activeClassName={nm.active}>Music </NavLink></div>
                 <div className={nm.item}> <br></br></div>
@@ -26,14 +28,5 @@ const Nav = (props) => {
     )
 };
 
-const NavFriends =(props)=>{
-    return (
-        <div className={nm.navfriends}>
-            <div><img className={nm.img} src='https://img5.goodfon.ru/original/800x480/d/13/eiza-gonzalez-devushka-vzgliad-foto-aktrisa-krasotka.jpg'/></div>
-            <div className={nm.nameFriend} ><h4>{props.name}</h4></div>
-        </div>
-
-    )
-};
 
 export default Nav

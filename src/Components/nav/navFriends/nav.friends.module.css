@@ -1,0 +1,14 @@
+.navfriends{
+    display: table-cell;
+    padding: 1px 6px 1px 6px;
+}
+
+.navfriends img{
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
+
+.nameFriend{
+
+}
