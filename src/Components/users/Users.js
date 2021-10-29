@@ -3,9 +3,60 @@ import styleUM from './style/Users.module.css'
 import * as axios from "axios";
 import userPhoto from '../../assets/photo/user1.png'
 import userPhotoE from '../../assets/photo/photoElizabetOlsen.jpg'
+import {NavLink} from "react-router-dom";
 
-// Функциональная (Контейнерная) компанента
-let Users = (props) => {
+// Функциональная (для Контейнерной) компанента
+let Users = (props) =>{
+    let pageCount = Math.ceil(props.totalCount / props.pageSize);
+    let pages = [];
+    for (let i = 1; i <= pageCount; i++) {pages.push(i);}
+
+    return <div>
+        <div>
+            {pages.map(p => {
+                return <span className={props.currentPage === p && styleUM.selectedPage}
+                             onClick={(e) => {props.onPageChanged(p);}}>{p}</span>})}
+        </div>
+        {
+            props.users.map(u => <div key={u.id}>
+                <span>
+                    <div className={styleUM.userImage}>
+                        <NavLink to={'/profile/'+ u.id}>
+                            <img src={u.photos.small != null ? u.photos.small : userPhotoE}/>
+                        </NavLink>
+                    </div>
+                    <div>
+                        {u.followed
+                            // onClick вызови анонимную стрелочную функцию
+                            // внутри  обращение к props
+                            // из props берется
+                            ? <button onClick={() => {
+                                props.unfollow(u.id)
+                            }}>UnFollow</button>
+                            : <button onClick={() => {
+                                props.follow(u.id)
+                            }}>Follow</button>
+                        }
+
+                    </div>
+                </span>
+                <span>
+                    <span>
+                        <div>{u.name}</div>
+                        <div>{u.status} </div>
+                    </span>
+                    <span>
+                        <div>{"u.location.country"}</div>
+                        <div>{"u.location.city"}</div>
+                    </span>
+                </span>
+            </div>)
+        }
+    </div>
+};
+
+// Функциональная (для Контейнерной) компанента
+let UsersF = (props) => {
     let imageElizabetURL = 'https://img1.goodfon.ru/original/960x854/d/36/elizabet-olsen-elizabeth-3196.jpg';
     // Side  Effect
     let getUsers = () => {

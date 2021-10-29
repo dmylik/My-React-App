@@ -56,8 +56,14 @@ let mapDispatchToProps =(dispatch) =>{
     }
 };
 
+let objectDispatchToProps = {
+        sendMessage: sendMessageCreator,
+        updateNewMesBody: updateNewMessageTexeCreator
+}
+
+
 //Контейнерная компанента для през.Компаненты (функциональная) Dialogs
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+const DialogsContainer = connect(mapStateToProps, objectDispatchToProps)(Dialogs);
 
 
 export default DialogsContainer

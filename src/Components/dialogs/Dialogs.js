@@ -3,14 +3,13 @@ import dm from '../../Style/gialogs/Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 
 
-class DialogsClass extends React.Component{
+class Dialogs extends React.Component{
     dialogsArray = this.props.ollMess.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
     messagesElement =this.props.ollMess.messagesArray.map(m =>  <Message message={m.message} key ={m.id}/> );
     newMessageBody =  this.props.ollMess.newMessageBody;
 
-    onSendMessageClick = ()=> {this.props.sendMessage();};
-    newMessageElement = (e) =>{this.props.updateNewMesBody(e.target.value);
-    };
+    newMessageElement = (txt) => {this.props.updateNewMesBody(txt);};
+    onSendMessageClick =()=> {this.props.sendMessage();};
 
     render() {
         return (
@@ -23,11 +22,13 @@ class DialogsClass extends React.Component{
                     <div className={dm.addMessage}>
                         <div>
                         <textarea value={this.newMessageBody}
-                                  onChange={this.newMessageElement}
+                                  // onChange={newMessageElement}
+                                  onChange={(e)=>{this.newMessageElement(e.target.value)}}
                                   placeholder='Enter your message'></textarea>
                         </div>
                         <div>
-                            <button onClick={this.onSendMessageClick}>Send Message</button>
+                            {/*<button onClick={onSendMessageClick}>Send Message</button>*/}
+                            <button onClick={(e)=>{this.onSendMessageClick()}}>Send Message</button>
                         </div>
                     </div>
                 </div>
@@ -37,9 +38,9 @@ class DialogsClass extends React.Component{
 
 
 // Презентационная (функциональная) компонента
-const Dialogs = (props) => {
+const Dialogs1 = (props) => {
     let dialogsArray = props.ollMess.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
-    let messagesElemrnt = props.ollMess.messagesArray.map(m =>  <Message message={m.message} key ={m.id}/> );
+    let messagesElement = props.ollMess.messagesArray.map(m =>  <Message message={m.message} key ={m.id}/> );
     let newMessageBody =  props.ollMess.newMessageBody;
 
     let onSendMessageClick = ()=> {
@@ -59,7 +60,7 @@ const Dialogs = (props) => {
                 {dialogsArray}
             </div>
             <div className={dm.messages}>
-                <div>{messagesElemrnt}</div>
+                <div>{messagesElement}</div>
                 <div className={dm.addMessage}>
                     <div>
                         <textarea value={newMessageBody}
@@ -94,4 +95,4 @@ const Message = (props) => {
     )
 };
 
-export default Dialogs
+export default Dialogs1

@@ -2,9 +2,20 @@ import React from 'react'
 import pm from '../../Style/content/Profile.module.css'
 import Post from "./Post/Post";
 import fordMustang from '../../assets/photo/ford.mustamg69.jpg'
+import * as axios from "axios";
 
 // Класовая компанента Profile
 class ProfileClass extends React.Component {
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+            .then(response => {
+                // this.props.setUserProfile(response.data);
+
+
+            });
+    }
+
     ollPostElement = this.props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes} key={p.id}/>);
     newPostElement = this.props.newPostText;
 
