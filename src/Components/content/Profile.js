@@ -2,50 +2,33 @@ import React from 'react'
 import pm from '../../Style/content/Profile.module.css'
 import Post from "./Post/Post";
 import fordMustang from '../../assets/photo/ford.mustamg69.jpg'
-import * as axios from "axios";
 
 // Класовая компанента Profile
-class ProfileClass extends React.Component {
-
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
-            .then(response => {
-                // this.props.setUserProfile(response.data);
-
-
-            });
-    }
-
-    ollPostElement = this.props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes} key={p.id}/>);
-    newPostElement = this.props.newPostText;
-
-    onAddPost = () => {this.props.addPost();};
-    onPostChange = (e) => {this.props.upTxtP(e.target.value);};
-
-    render() {
-        return(
-            <div className={pm.item}>
-                <div className={pm.logoImage}>
-                    <img src={fordMustang}/>
-                </div>
-                <div>
-                    ProfileInfo
-                </div>
-                <div className={pm.posts}>
-                    <h3>My Post</h3>
-                    <div className={pm.addPost}>
-                        <div>
-                            <textarea value={this.newPostElement} onChange={this.onPostChange}/>
-                        </div>
-                        <div>
-                            <button onClick={this.onAddPost}>Add Post</button>
-                        </div>
+const ProfileClass = (props) => {
+    return(
+        <div className={pm.item}>
+            <div className={pm.logoImage}>
+                <img src={fordMustang}/>
+            </div>
+            <div>
+                ProfileInfo
+            </div>
+            <div className={pm.posts}>
+                <h3>My Post</h3>
+                <div className={pm.addPost}>
+                    <div>
+                        <textarea value={props.newPostElement} onChange={props.onPostChange}/>
                     </div>
-                    {this.ollPostElement}
+                    <div>
+                        <button onClick={props.onAddPost}>Add Post</button>
+                    </div>
                 </div>
-            </div>)
-    }
-}
+                {props.ollPostElement}
+            </div>
+        </div>
+    )
+};
+
 
 // Презентационная (функциональная) компонента Profile
 const ProfileFunction = (props) => {
@@ -85,7 +68,8 @@ const ProfileFunction = (props) => {
             </div>
         </div>
     )
-}
+};
 
 
-export default ProfileFunction
+export default ProfileClass
+// export default ProfileFunction
