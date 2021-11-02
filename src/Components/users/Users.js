@@ -4,6 +4,7 @@ import * as axios from "axios";
 import userPhoto from '../../assets/photo/user1.png'
 import userPhotoE from '../../assets/photo/photoElizabetOlsen.jpg'
 import {NavLink} from "react-router-dom";
+import {userDeleteFollow, userPostFollow} from "../../api/api";
 
 // Функциональная (для Контейнерной) компанента
 let Users = (props) =>{
@@ -31,13 +32,23 @@ let Users = (props) =>{
                             // внутри  обращение к props
                             // из props берется
                             ? <button onClick={() => {
-                                props.unfollow(u.id)
+                                userDeleteFollow(u.id)
+                                    .then(data => {
+                                        if (data.resultCode === 0) {
+                                            props.unfollow(u.id);
+                                        }
+                                    });
                             }}>UnFollow</button>
+
                             : <button onClick={() => {
-                                props.follow(u.id)
+                                userPostFollow(u.id)
+                                    .then(data => {
+                                        if (data.resultCode === 0) {
+                                            props.follow(u.id);
+                                        }
+                                    });
                             }}>Follow</button>
                         }
-
                     </div>
                 </span>
                 <span>

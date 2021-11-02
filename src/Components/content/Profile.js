@@ -1,30 +1,26 @@
 import React from 'react'
-import pm from '../../Style/content/Profile.module.css'
+import pm from './Profile.module.css'
 import Post from "./Post/Post";
 import fordMustang from '../../assets/photo/ford.mustamg69.jpg'
+import Preloader from "../../basket/Preloader/Preloader";
+import UserInformation from "./UserInformation/UserInformation";
+import Wall from "./Wall/Wall";
 
 // Класовая компанента Profile
-const ProfileClass = (props) => {
+const Profile = (props) => {
+    if(!props.profile ){
+        return <Preloader/>
+    } else
     return(
         <div className={pm.item}>
-            <div className={pm.logoImage}>
-                <img src={fordMustang}/>
-            </div>
-            <div>
-                ProfileInfo
-            </div>
-            <div className={pm.posts}>
-                <h3>My Post</h3>
-                <div className={pm.addPost}>
-                    <div>
-                        <textarea value={props.newPostElement} onChange={props.onPostChange}/>
-                    </div>
-                    <div>
-                        <button onClick={props.onAddPost}>Add Post</button>
-                    </div>
-                </div>
-                {props.ollPostElement}
-            </div>
+            <UserInformation profile={props.profile}/>
+
+            <Wall newPostElement={props.newPostElement}
+                  ollPostElement={props.ollPostElement}
+                  profile={props.profile}
+                  nPostChange={props.onPostChange}
+                  onAddPost={props.onAddPost}
+            />
         </div>
     )
 };
@@ -71,5 +67,5 @@ const ProfileFunction = (props) => {
 };
 
 
-export default ProfileClass
+export default Profile
 // export default ProfileFunction
