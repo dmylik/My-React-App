@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    addPostActionCreator,
+    addPostActionCreator, getUserProfileThunkCreater,
     setUserProfileAC,
     updateNewTextPostActionCreator
 } from "../../redux/reducers/profile-reducer";
@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import * as axios from "axios";
 import Post from "./Post/Post";
 import {withRouter} from "react-router-dom";
+import {profileAPI} from "../../api/api";
 
 
 
@@ -17,10 +18,8 @@ class ProfileClass extends React.Component {
     componentDidMount() {
         let userID = this.props.match.params.userId;
         if (!userID) userID=2;
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+userID)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });
+
+        this.props.getUserProfileTC(userID);
     }
 
     ollPostElement = this.props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes} key={p.id}/>);
@@ -52,6 +51,16 @@ let mapStateToProps = (state)=> {
 };
 
 // функция которая передает объект "функции" для выполнения в Redux
+// обект actionCreater для упрощенной схемы передачи их redux
+// redux сам собирает объект как mapDispatchToProps
+// если  назвать функции в reducer и container можно еще упростить код
+let objectAC = {
+    upTxtP: updateNewTextPostActionCreator,
+    addPost: addPostActionCreator,
+    setUserProfile: setUserProfileAC,
+    getUserProfileTC: getUserProfileThunkCreater
+};
+
 let mapDispatchToProps = (dispatch) => {
     return{
         upTxtP: (text) =>{ dispatch(updateNewTextPostActionCreator(text));},
@@ -64,7 +73,7 @@ let mapDispatchToProps = (dispatch) => {
 let WithUrlData =  withRouter(ProfileClass);
 
 //Контенерная компонента который получает данные и передает их компонете Profile
-const ProfileContainer = connect(mapStateToProps,mapDispatchToProps)(WithUrlData);
+const ProfileContainer = connect(mapStateToProps,objectAC)(WithUrlData);
 
 
 export default ProfileContainer;

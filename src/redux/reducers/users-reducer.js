@@ -1,9 +1,12 @@
+import {usersAPI} from "../../api/api";
+
 const FOLLOW = 'FOLLOW';
 const UN_FOLLOW = 'UN-FOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
-const TOGGLE_IS_SVG = 'TOGGLE_IS_SVG';
+const TOGGLE_IS_SVG = 'TOGGLE-IS-SVG';
+const TOGGLE_IS_FOLLOWING = 'TOGGLE-IS-FOLLOWING';
 
 //Инициализация данных по умолчанию пока не были переданный другие данные
 let initialState = {
@@ -11,7 +14,8 @@ let initialState = {
     pageSize: 20,
     totalCount: 0,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingProgress: []
 
 };
 
@@ -43,9 +47,14 @@ const usersReducer = (state = initialState, action) => {
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.currentPage};
         case SET_TOTAL_COUNT:
-            return {...state, totalCount: action.totalCount > 500 ? 500 : action.totalCount };
-            case TOGGLE_IS_SVG:
+            return {...state, totalCount: action.totalCount > 500 ? 500 : action.totalCount};
+        case TOGGLE_IS_SVG:
             return {...state, isFetching: action.isFetching};
+        case TOGGLE_IS_FOLLOWING:
+            return {...state,
+                 followingProgress: action.isFetching
+                     ? [...state.followingProgress, action.userID]
+                     : state.followingProgress.filter(id=> id!= action.userID)};
         default:
             return state;
     }
@@ -61,6 +70,58 @@ export let setUsersAC = (users) => ({type: SET_USERS, users});
 export let setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
 export let setTotalCountAC = (totalCount) => ({type: SET_TOTAL_COUNT, totalCount});
 export let toggleIsFetchingAC = (isFetching) => ({type: TOGGLE_IS_SVG, isFetching});
+export let toggleIsFollowingAC = (isFollPr, userID) => ({type: TOGGLE_IS_FOLLOWING, isFollPr, userID});
+
+
+export const getUsersThunkCreator = (currentPage, pageSize, isCurentPage) => {
+    //thunk санка, которая возвращает users
+    const getUsersThunk = (dispatch) => {
+        // Вызов preloader (изображение загрузки при слабои инете)
+        dispatch(toggleIsFetchingAC(true));
+
+        if(isCurentPage===true)
+            dispatch(setCurrentPageAC(currentPage));
+
+        // axion запросы с json данных
+        // alert("New object"); отрабатывет один раз
+        // get запрос находится в api в getUsers
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setUsersAC(data.items));
+                dispatch(setTotalCountAC(data.totalCount));
+                dispatch(toggleIsFetchingAC(false));
+            });
+    };
+    return getUsersThunk;
+};
+
+// Санка отписки
+export const unFollowThunkCreator = (userID)=> {
+    const unFollowThunk = (dispatch) => {
+        dispatch(toggleIsFollowingAC(true, userID));
+        usersAPI.userDeleteFollow(userID)
+            .then(data => {
+                if (data.resultCode === 0)
+                    dispatch(unfollowAC(userID));
+                dispatch(toggleIsFollowingAC(false, userID));
+            });
+    };
+    return unFollowThunk;
+};
+
+// Санка подписки
+export const followThunkCreator = (userID)=> {
+    const followThunk = (dispatch) => {
+        dispatch(toggleIsFollowingAC(true, userID));
+        usersAPI.userPostFollow(userID)
+            .then(data => {
+                if (data.resultCode === 0)
+                    dispatch(followAC(userID));
+                dispatch(toggleIsFollowingAC(false, userID));
+            });
+    };
+    return followThunk;
+};
 
 
 export default usersReducer

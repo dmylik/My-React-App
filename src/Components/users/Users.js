@@ -4,7 +4,7 @@ import * as axios from "axios";
 import userPhoto from '../../assets/photo/user1.png'
 import userPhotoE from '../../assets/photo/photoElizabetOlsen.jpg'
 import {NavLink} from "react-router-dom";
-import {userDeleteFollow, userPostFollow} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 // Функциональная (для Контейнерной) компанента
 let Users = (props) =>{
@@ -21,6 +21,12 @@ let Users = (props) =>{
         {
             props.users.map(u => <div key={u.id}>
                 <span>
+                    <span>
+                        <div>{u.name}</div>
+                        <div>{u.status} </div>
+                    </span>
+                </span>
+                <span>
                     <div className={styleUM.userImage}>
                         <NavLink to={'/profile/'+ u.id}>
                             <img src={u.photos.small != null ? u.photos.small : userPhotoE}/>
@@ -31,36 +37,18 @@ let Users = (props) =>{
                             // onClick вызови анонимную стрелочную функцию
                             // внутри  обращение к props
                             // из props берется
-                            ? <button onClick={() => {
-                                userDeleteFollow(u.id)
-                                    .then(data => {
-                                        if (data.resultCode === 0) {
-                                            props.unfollow(u.id);
-                                        }
-                                    });
-                            }}>UnFollow</button>
+                            // для disable кнопки, пока не пернутся данные с сервера
+                            ? <button disabled={props.folProg.some(id => id===u.id)}
+                                      onClick={() => {props.unFollowTC(u.id);}}>
+                            Follow</button>
 
-                            : <button onClick={() => {
-                                userPostFollow(u.id)
-                                    .then(data => {
-                                        if (data.resultCode === 0) {
-                                            props.follow(u.id);
-                                        }
-                                    });
-                            }}>Follow</button>
+                            : <button disabled={props.folProg.some(id => id===u.id)}
+                                      onClick={() => {props.followTC(u.id);}}>
+                                UnFollow</button>
                         }
                     </div>
                 </span>
-                <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status} </div>
-                    </span>
-                    <span>
-                        <div>{"u.location.country"}</div>
-                        <div>{"u.location.city"}</div>
-                    </span>
-                </span>
+
             </div>)
         }
     </div>
@@ -141,10 +129,6 @@ let UsersF = (props) => {
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status} </div>
-                    </span>
-                    <span>
-                        <div>{"u.location.country"}</div>
-                        <div>{"u.location.city"}</div>
                     </span>
                 </span>
             </div>)

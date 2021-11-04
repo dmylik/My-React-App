@@ -62,7 +62,7 @@ const dialogsReducer = (state = initialState, action) => {
 
 // создание элементов action для каждой команды
 export let sendMessageCreator = () => ({type: SEND_MESSAGE});
-export let updateNewMessageTexeCreator = (text) => {
+export let updateNewMessageTextCreator = (text) => {
     return {type: UPDATE_NEW_MESSAGE_TEXT, textMessageNew: text}
 };
 
