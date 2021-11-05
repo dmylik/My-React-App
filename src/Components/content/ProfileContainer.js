@@ -9,8 +9,10 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import * as axios from "axios";
 import Post from "./Post/Post";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 import {profileAPI} from "../../api/api";
+import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 
 
@@ -29,6 +31,8 @@ class ProfileClass extends React.Component {
     onPostChange = (e) => {this.props.upTxtP(e.target.value);};
 
     render() {
+        if (!this.props.isAuth)
+            return <Redirect to={'/login'}/>;
         return(<ProfileAPI {...this.props}
                            newPostElement={this.newPostElement}
                            ollPostElement={this.ollPostElement}
@@ -61,19 +65,21 @@ let objectAC = {
     getUserProfileTC: getUserProfileThunkCreater
 };
 
-let mapDispatchToProps = (dispatch) => {
-    return{
-        upTxtP: (text) =>{ dispatch(updateNewTextPostActionCreator(text));},
-        addPost: ()=>{ dispatch(addPostActionCreator());},
-        setUserProfile: (profile)=>{dispatch(setUserProfileAC(profile));}
-    }
-};
+export default compose(
+    connect(mapStateToProps,objectAC),
+    withRouter,
+    withAuthRedirect
+)(ProfileClass);
+// compose заменяет все то, что написано ниже
+// Выполнение от последнего к первому
+
+// HOC хок для проверки подкиски
+let AuthRedirectComponent = withAuthRedirect(ProfileClass);
 
 // делает запрос на сервак, для получения данных по URL
-let WithUrlData =  withRouter(ProfileClass);
+let WithUrlData =  withRouter(AuthRedirectComponent);
 
 //Контенерная компонента который получает данные и передает их компонете Profile
 const ProfileContainer = connect(mapStateToProps,objectAC)(WithUrlData);
 
-
-export default ProfileContainer;
+// export default ProfileContainer;

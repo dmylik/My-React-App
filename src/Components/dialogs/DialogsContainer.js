@@ -2,68 +2,49 @@ import React from 'react'
 import {sendMessageCreator, updateNewMessageTextCreator} from "../../redux/reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 
-//Контейнерная компанента для през.Компаненты (функциональная) Dialogs
-// const DialogsContainer = (props) => {
-//
-//     let state = props.store.getState();
-//
-//     let onSendMessageClick = ()=> props.store.dispatch(sendMessageCreator());
-//
-//     let newMessageElement = (body) =>{
-//         props.store.dispatch(updateNewMessageTexeCreator(body))
-//     };
-//
-//     return (<Dialogs sendMessage={onSendMessageClick}
-//                      updateNewMesBody = {newMessageElement}
-//                      newMessageBody = {state.messagesPage.newMessageBody}
-//                      ollMess = {state.messagesPage}/>)
-//
-// }
+class DialogsAPI extends React.Component{
+    newMessageElement = (txt) => {this.props.updateNewMesBody(txt);};
+    onSendMessageClick =()=> {this.props.sendMessage();};
 
-// const DialogsContainer = (props) => {
-//     return (
-//         <StoreContext.Consumer>
-//             {
-//             (store) => {
-//                 let state = store.getState();
-//
-//                 let onSendMessageClick = () => store.dispatch(sendMessageCreator());
-//
-//                 let newMessageElement = (body) => {
-//                     store.dispatch(updateNewMessageTexeCreator(body))
-//                 };
-//
-//                 return (<Dialogs sendMessage={onSendMessageClick}
-//                                  updateNewMesBody={newMessageElement}
-//                                  newMessageBody={state.messagesPage.newMessageBody}
-//                                  ollMess={state.messagesPage}/>)
-//             }
-//             }
-//         </StoreContext.Consumer>)
-//
-// };
-
-let mapStateToProps = (state) =>{
-    return { ollMess: state.messagesPage}
-};
-
-let mapDispatchToProps =(dispatch) =>{
-    return {
-        sendMessage: ()=>{ dispatch(sendMessageCreator());},
-        updateNewMesBody: (body)=>{ dispatch(updateNewMessageTextCreator(body))}
+    render() {
+        return (<Dialogs newMessageElement={this.newMessageElement}
+                         onSendMessageClick={this.onSendMessageClick}
+                         newMessageBody ={this.props.ollMess.newMessageBody}
+                         dialogsArray = {this.props.ollMess.dialogsArray}
+                         messagesElement ={this.props.ollMess.messagesArray}
+        />)
     }
 };
+
+let mapStateToProps = (state) =>{
+    return { ollMess: state.messagesPage}};
 
 let objectDispatchToProps = {
         sendMessage: sendMessageCreator,
         updateNewMesBody: updateNewMessageTextCreator
-}
+};
+
+compose(
+    connect(mapStateToProps, objectDispatchToProps),
+    withAuthRedirect
+)(DialogsAPI);
 
 
-//Контейнерная компанента для през.Компаненты (функциональная) Dialogs
-const DialogsContainer = connect(mapStateToProps, objectDispatchToProps)(Dialogs);
+// // HOC хок для проверки подкиски
+// let AuthRedirectComponent = withAuthRedirect(DialogsAPI);
+// //Контейнерная компанента для през.Компаненты (функциональная) Dialogs
+// const DialogsContainer = connect(mapStateToProps, objectDispatchToProps)(AuthRedirectComponent);
+// export default DialogsContainer
 
 
-export default DialogsContainer
+//функция, которая принимает во (1,2)(DialogsAPI)
+// и затем с ней выполняет функции из 2->1 из (1,2)(DialogsAPI)
+export default compose(
+    connect(mapStateToProps, objectDispatchToProps),
+    withAuthRedirect
+)(DialogsAPI);
+

@@ -23,17 +23,19 @@ export const usersAPI = {
     userDeleteFollow(id) {
         return instance.delete(`follow/${id}`)
             .then(response => {return response.data})
-    },
-
-    authMe() {
-        return instance.get(`auth/me`)
-            .then(response => {return response.data})
     }
 };
 
 export const profileAPI = {
     getUserProfile(userID){
         return instance.get(`profile/` + userID)
+            .then(response => {return response.data})
+    }
+};
+
+export const headerAPI = {
+    authMe(){
+        return instance.get(`auth/me`)
             .then(response => {return response.data})
     }
 };

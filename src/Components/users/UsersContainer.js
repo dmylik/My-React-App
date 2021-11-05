@@ -10,6 +10,8 @@ import {
 } from "../../redux/reducers/users-reducer";
 import Users from "./Users";
 import Preloader from "../../basket/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 // Класовая компанента
 class UsersAPI extends React.Component {
@@ -63,8 +65,6 @@ let mapStateToProps = (state)=> {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         folProg: state.usersPage.followingProgress
-
-
     }
 };
 
@@ -82,6 +82,15 @@ let objectAC = {
     // toggleIsFetching: toggleIsFetchingAC
 };
 
-const UsersContainer = connect(mapStateToProps, objectAC)(UsersAPI);
+// повторение нижнего (цепочка вызовов)
+export default compose(
+    connect(mapStateToProps, objectAC),
+    withAuthRedirect)
+(UsersAPI);
 
-export default UsersContainer;
+// HOC хок для проверки подкиски
+let AuthRedirectComponent = withAuthRedirect(UsersAPI);
+
+const UsersContainer = connect(mapStateToProps, objectAC)(AuthRedirectComponent);
+
+// export default UsersContainer;
