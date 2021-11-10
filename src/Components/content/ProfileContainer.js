@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-    addPostActionCreator, getUserProfileThunkCreater,
+    addPostActionCreator, getStatusThunkCreator, getUserProfileThunkCreater,
     setUserProfileAC,
-    updateNewTextPostActionCreator
+    updateNewTextPostActionCreator, updateStatusThunkCreator
 } from "../../redux/reducers/profile-reducer";
 import ProfileAPI from "./Profile";
 import Profile from "./Profile";
@@ -19,9 +19,10 @@ import {compose} from "redux";
 class ProfileClass extends React.Component {
     componentDidMount() {
         let userID = this.props.match.params.userId;
-        if (!userID) userID=2;
+        if (!userID) userID=20553;
 
         this.props.getUserProfileTC(userID);
+        this.props.getStatusTC(userID);
     }
 
     ollPostElement = this.props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes} key={p.id}/>);
@@ -38,7 +39,10 @@ class ProfileClass extends React.Component {
                            ollPostElement={this.ollPostElement}
                            onAddPost={this.onAddPost}
                            onPostChange={this.onPostChange}
+
                            profile={this.props.profile}
+                           status ={this.props.status}
+                           updateStatus = {this.props.updateStatusTC}
 
         />)
     }
@@ -50,7 +54,8 @@ let mapStateToProps = (state)=> {
     return {
         ollPost: state.profilePage,
         newPostText: state.profilePage.newPostText,
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 };
 
@@ -62,7 +67,10 @@ let objectAC = {
     upTxtP: updateNewTextPostActionCreator,
     addPost: addPostActionCreator,
     setUserProfile: setUserProfileAC,
-    getUserProfileTC: getUserProfileThunkCreater
+    getUserProfileTC: getUserProfileThunkCreater,
+    getStatusTC: getStatusThunkCreator,
+    updateStatusTC: updateStatusThunkCreator
+
 };
 
 export default compose(

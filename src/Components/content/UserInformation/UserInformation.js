@@ -2,6 +2,7 @@ import React from 'react'
 import fordMustang from '../../../assets/photo/ford.mustamg69.jpg'
 import Preloader from "../../../basket/Preloader/Preloader";
 import uim from './user.info.module.css'
+import UserStatus from "./UserStatus";
 
 // Класовая компанента Profile
 const UserInformation = (props) => {
@@ -18,8 +19,10 @@ const UserInformation = (props) => {
 
                 <div className={uim.userText}>
                     <h3>{props.profile.fullName}</h3>
-                    <p>About me: </p>
-                    <p>{props.profile.aboutMe}</p>
+
+                    <UserStatus status={props.status} updateStatus={props.updateStatus}/>
+
+                    <br/>
                     <table>
                         {props.profile.contacts.facebook ? <tr>
                             <td>facebook:</td>

@@ -13,7 +13,10 @@ const Profile = (props) => {
     } else
     return(
         <div className={pm.item}>
-            <UserInformation profile={props.profile}/>
+            <UserInformation profile={props.profile}
+                             status ={props.status}
+                             updateStatus={props.updateStatus}
+            />
 
             <Wall newPostElement={props.newPostElement}
                   ollPostElement={props.ollPostElement}

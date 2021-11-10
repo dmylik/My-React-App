@@ -5,6 +5,7 @@ import navReducer from "./reducers/nav-reducer";
 import usersReducer from "./reducers/users-reducer";
 import authReducer from "./reducers/auth-reducer";
 import thunkMiddleware from "redux-thunk"
+import {reducer as formReducer } from 'redux-form'
 
 // Redux вызов reducers(редьюсеров) файлов
 // название : вызов reducer
@@ -13,7 +14,8 @@ let reducers = combineReducers({
     messagesPage: dialogsReducer,
     navPage: navReducer,
     usersPage: usersReducer,
-    authReducer: authReducer
+    authReducer: authReducer,
+    form: formReducer
 });
 
 //игициалихация store с использование Redux
