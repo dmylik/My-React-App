@@ -1,5 +1,5 @@
 import React from 'react'
-import {sendMessageCreator, updateNewMessageTextCreator} from "../../redux/reducers/dialogs-reducer";
+import {sendMessageCreator} from "../../redux/reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
@@ -7,12 +7,10 @@ import {compose} from "redux";
 
 
 class DialogsAPI extends React.Component{
-    newMessageElement = (txt) => {this.props.updateNewMesBody(txt);};
-    onSendMessageClick =()=> {this.props.sendMessage();};
+    onSendMessageClick =(txt)=> {this.props.sendMessage(txt);};
 
     render() {
-        return (<Dialogs newMessageElement={this.newMessageElement}
-                         onSendMessageClick={this.onSendMessageClick}
+        return (<Dialogs onSendMessageClick={this.onSendMessageClick}
                          newMessageBody ={this.props.ollMess.newMessageBody}
                          dialogsArray = {this.props.ollMess.dialogsArray}
                          messagesElement ={this.props.ollMess.messagesArray}
@@ -20,13 +18,9 @@ class DialogsAPI extends React.Component{
     }
 };
 
-let mapStateToProps = (state) =>{
-    return { ollMess: state.messagesPage}};
+let mapStateToProps = (state) =>{return { ollMess: state.messagesPage}};
 
-let objectDispatchToProps = {
-        sendMessage: sendMessageCreator,
-        updateNewMesBody: updateNewMessageTextCreator
-};
+let objectDispatchToProps = {sendMessage: sendMessageCreator};
 
 compose(
     connect(mapStateToProps, objectDispatchToProps),

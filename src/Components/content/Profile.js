@@ -18,11 +18,9 @@ const Profile = (props) => {
                              updateStatus={props.updateStatus}
             />
 
-            <Wall newPostElement={props.newPostElement}
-                  ollPostElement={props.ollPostElement}
+            <Wall ollPostElement={props.ollPostElement}
                   profile={props.profile}
-                  nPostChange={props.onPostChange}
-                  onAddPost={props.onAddPost}
+                  addPost={props.addPost}
             />
         </div>
     )

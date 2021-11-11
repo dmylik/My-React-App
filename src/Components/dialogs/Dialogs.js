@@ -1,6 +1,11 @@
 import React from 'react'
 import dm from '../../Style/gialogs/Dialogs.module.css'
 import {NavLink} from "react-router-dom";
+import {Field, reduxForm} from "redux-form";
+import {Textarea} from "../../basket/FormsControls/FormsControls";
+import {maxLengthCreator, requiredField} from "../../basket/validators/validators";
+
+let maxLength =  maxLengthCreator(50);
 
 
 const Dialogs = (props) => {
@@ -8,7 +13,9 @@ const Dialogs = (props) => {
     let messagesElement =props.messagesElement.map(m =>  <Message message={m.message} key ={m.id}/> );
     let newMessageBody =  props.newMessageBody;
 
-        return (
+    const onSubmit = (formData) =>{props.onSendMessageClick(formData.message);};
+
+    return (
         <div className={dm.dialogModule}>
                 <div className={dm.dialogsItem}>
                     {dialogsArray}
@@ -16,20 +23,29 @@ const Dialogs = (props) => {
                 <div className={dm.messages}>
                     <div>{messagesElement}</div>
                     <div className={dm.addMessage}>
-                        <div>
-                        <textarea value={newMessageBody}
-                                  // onChange={newMessageElement}
-                                  onChange={(e)=>{props.newMessageElement(e.target.value)}}
-                                  placeholder='Enter your message'></textarea>
-                        </div>
-                        <div>
-                            {/*<button onClick={onSendMessageClick}>Send Message</button>*/}
-                            <button onClick={(e)=>{props.onSendMessageClick()}}>Send Message</button>
-                        </div>
+                        <InputMessageReduxForm  onSubmit={onSubmit}/>
                     </div>
                 </div>
             </div>)
 };
+
+const InputTextMessage = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field  placeholder={"Text"} name={"message"} component={Textarea}
+                    validate={[requiredField, maxLength]}/>
+        </div>
+        <button>
+            Send Message
+        </button>
+    </form>
+};
+
+const InputMessageReduxForm = reduxForm({
+    // a unique name for the form
+    form: 'message'
+})(InputTextMessage)
+
 
 
 // Презентационная (функциональная) компонента

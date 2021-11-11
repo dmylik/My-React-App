@@ -1,16 +1,14 @@
 import React from 'react'
 import {
-    addPostActionCreator, getStatusThunkCreator, getUserProfileThunkCreater,
+    addPostActionCreator,
+    getStatusThunkCreator,
+    getUserProfileThunkCreater,
     setUserProfileAC,
-    updateNewTextPostActionCreator, updateStatusThunkCreator
+    updateStatusThunkCreator
 } from "../../redux/reducers/profile-reducer";
 import ProfileAPI from "./Profile";
-import Profile from "./Profile";
 import {connect} from "react-redux";
-import * as axios from "axios";
-import Post from "./Post/Post";
 import {Redirect, withRouter} from "react-router-dom";
-import {profileAPI} from "../../api/api";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import {compose} from "redux";
 
@@ -25,20 +23,12 @@ class ProfileClass extends React.Component {
         this.props.getStatusTC(userID);
     }
 
-    ollPostElement = this.props.ollPost.postArray.map(p => <Post message={p.post} like={p.likes} key={p.id}/>);
-    newPostElement = this.props.newPostText;
-
-    onAddPost = () => {this.props.addPost();};
-    onPostChange = (e) => {this.props.upTxtP(e.target.value);};
-
     render() {
         if (!this.props.isAuth)
             return <Redirect to={'/login'}/>;
         return(<ProfileAPI {...this.props}
-                           newPostElement={this.newPostElement}
-                           ollPostElement={this.ollPostElement}
-                           onAddPost={this.onAddPost}
-                           onPostChange={this.onPostChange}
+                           ollPostElement={this.props.ollPost.postArray}
+                           addPost={this.props.addPost}
 
                            profile={this.props.profile}
                            status ={this.props.status}
@@ -64,7 +54,6 @@ let mapStateToProps = (state)=> {
 // redux сам собирает объект как mapDispatchToProps
 // если  назвать функции в reducer и container можно еще упростить код
 let objectAC = {
-    upTxtP: updateNewTextPostActionCreator,
     addPost: addPostActionCreator,
     setUserProfile: setUserProfileAC,
     getUserProfileTC: getUserProfileThunkCreater,

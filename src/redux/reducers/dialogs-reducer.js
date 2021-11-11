@@ -1,5 +1,4 @@
 const SEND_MESSAGE = 'SEND_MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
 
 //Инициализация данных по умолчанию пока небыли переданный другие данные
 let initialState = {
@@ -17,38 +16,24 @@ let initialState = {
             {id: 2, message: 'How Are you'},
             {id: 3, message: 'I am bad'},
             {id: 4, message: 'Yo'},
-            {id: 5, message: 'Yo'}],
-
-        newMessageBody: ' '
+            {id: 5, message: 'Yo'}]
 };
 
 //Reducer для диалогов, принимает:
 //state - только для себя (messagesPage) и
 //action - набор всех возможных команд
 const dialogsReducer = (state = initialState, action) => {
-
     let stateCopy ;
-
-
-
     switch (action.type) {
         case SEND_MESSAGE:
-            let body = state.newMessageBody;
-            stateCopy = {
-                ...state,
+            let body = action.textMessageNew;
+            stateCopy = {...state,
                 messagesArray: [...state.messagesArray, {id: 6, message: body}],
-                newMessageBody:  ''
             };
             // stateCopy.messagesArray.push({id: 6, message: body});
             // stateCopy.newMessageBody = '';
             return stateCopy;
 
-        case UPDATE_NEW_MESSAGE_TEXT:
-            //можно сразу возвращать объект
-            return  {
-                ...state,
-                newMessageBody: action.textMessageNew
-            };
             // stateCopy.newMessageBody = action.textMessageNew;
             // return stateCopy;
         default:
@@ -61,9 +46,6 @@ const dialogsReducer = (state = initialState, action) => {
 // Если команд не обнаружено, вохвращается state без изменения
 
 // создание элементов action для каждой команды
-export let sendMessageCreator = () => ({type: SEND_MESSAGE});
-export let updateNewMessageTextCreator = (text) => {
-    return {type: UPDATE_NEW_MESSAGE_TEXT, textMessageNew: text}
-};
+export let sendMessageCreator = (text) => ({type: SEND_MESSAGE, textMessageNew: text});
 
 export default dialogsReducer;
