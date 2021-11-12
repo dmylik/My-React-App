@@ -2,16 +2,20 @@ import React from 'react'
 import {connect} from "react-redux";
 import {
     followAC, getUsersThunkCreator,
-    setCurrentPageAC,
-    setTotalCountAC,
-    setUsersAC,
-    toggleIsFetchingAC, toggleIsFollowingAC, unFollowThunkCreator,
+    toggleIsFollowingAC, unFollowThunkCreator,
     unfollowAC, followThunkCreator
 } from "../../redux/reducers/users-reducer";
 import Users from "./Users";
 import Preloader from "../../basket/Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage, getFollowingProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalCount,
+    getUsers
+} from "../../redux/selectors/users-selectors"
 
 // Класовая компанента
 class UsersAPI extends React.Component {
@@ -59,12 +63,12 @@ class UsersAPI extends React.Component {
 let mapStateToProps = (state)=> {
     return {
         // объект
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        folProg: state.usersPage.followingProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalCount: getTotalCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        folProg: getFollowingProgress(state)
     }
 };
 
@@ -84,9 +88,9 @@ let objectAC = {
 
 // повторение нижнего (цепочка вызовов)
 export default compose(
-    connect(mapStateToProps, objectAC),
-    withAuthRedirect)
-(UsersAPI);
+    connect(mapStateToProps, objectAC)
+    // , withAuthRedirect
+)(UsersAPI);
 
 // HOC хок для проверки подкиски
 let AuthRedirectComponent = withAuthRedirect(UsersAPI);

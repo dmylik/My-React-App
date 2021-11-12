@@ -6,7 +6,6 @@ import Preloader from "../../basket/Preloader/Preloader";
 import UserInformation from "./UserInformation/UserInformation";
 import Wall from "./Wall/Wall";
 
-// Класовая компанента Profile
 const Profile = (props) => {
     if(!props.profile ){
         return <Preloader/>

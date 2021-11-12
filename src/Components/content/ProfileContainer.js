@@ -16,8 +16,15 @@ import {compose} from "redux";
 
 class ProfileClass extends React.Component {
     componentDidMount() {
+        // Получение id выбраного пользователся
         let userID = this.props.match.params.userId;
-        if (!userID) userID=20553;
+        // если его нет, переходим на свой профиль
+        if (!userID){
+            userID= this.props.authUserId;
+            if(!userID)
+                this.props.history.push("/login");
+        }
+
 
         this.props.getUserProfileTC(userID);
         this.props.getStatusTC(userID);
@@ -45,7 +52,10 @@ let mapStateToProps = (state)=> {
         ollPost: state.profilePage,
         newPostText: state.profilePage.newPostText,
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        authUserId: state.authReducer.userId,
+        isAuth: state.authReducer.isAuth
+
     }
 };
 

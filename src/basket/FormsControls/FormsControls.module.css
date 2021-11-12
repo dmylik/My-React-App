@@ -13,3 +13,9 @@
     color: #ba0000;
 
 }
+
+.formOllError{
+    border: red 2px solid;
+    padding: 5px;
+    color: coral;
+}
