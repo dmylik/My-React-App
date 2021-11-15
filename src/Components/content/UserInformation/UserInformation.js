@@ -6,7 +6,7 @@ import UserStatus from "./UserStatus";
 import UserStatusHook from "./UserStatusHook";
 
 // Класовая компанента Profile
-const UserInformation = (props) => {
+const UserInformation = React.memo((props) => {
     if (!props.profile) {
         return <Preloader/>
     } else
@@ -61,6 +61,6 @@ const UserInformation = (props) => {
                 </div>
             </div>
         )
-};
+});
 
 export default UserInformation

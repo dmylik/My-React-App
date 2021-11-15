@@ -6,7 +6,7 @@ import Preloader from "../../basket/Preloader/Preloader";
 import UserInformation from "./UserInformation/UserInformation";
 import Wall from "./Wall/Wall";
 
-const Profile = (props) => {
+const Profile = React.memo((props) => {
     if(!props.profile ){
         return <Preloader/>
     } else
@@ -23,7 +23,7 @@ const Profile = (props) => {
             />
         </div>
     )
-};
+});
 
 
 // Презентационная (функциональная) компонента Profile

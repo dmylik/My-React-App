@@ -8,9 +8,14 @@ import {maxLengthCreator, requiredField} from "../../basket/validators/validator
 let maxLength =  maxLengthCreator(50);
 
 
-const Dialogs = (props) => {
-    let dialogsArray = props.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
-    let messagesElement =props.messagesElement.map(m =>  <Message message={m.message} key ={m.id}/> );
+const Dialogs = React.memo((props) => {
+    // reverse() - мутирующая функция (нарушает имьютабильность), идя того, что бы не менять даные в global state
+    // использовать нужно капию массива[...props.array].reverse() - мутирующая
+    // let dialogsArray = [...props.dialogsArray].reverse().map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
+    // let messagesElement = [...props.messagesElement].reverse().map(m =>  <Message message={m.message} key ={m.id}/> );
+
+    let dialogsArray = [...props.dialogsArray].map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
+    let messagesElement = [...props.messagesElement].map(m =>  <Message message={m.message} key ={m.id}/> );
     let newMessageBody =  props.newMessageBody;
 
     const onSubmit = (formData) =>{props.onSendMessageClick(formData.message);};
@@ -27,7 +32,7 @@ const Dialogs = (props) => {
                     </div>
                 </div>
             </div>)
-};
+});
 
 const InputTextMessage = (props) => {
     return <form onSubmit={props.handleSubmit}>

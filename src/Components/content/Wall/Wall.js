@@ -7,7 +7,7 @@ import {Textarea} from "../../../basket/FormsControls/FormsControls";
 
 let maxLength =  maxLengthCreator(10);
 
-const Wall = (props)=>{
+const Wall = React.memo( (props)=>{
     const onSubmit = (formData) =>{props.addPost(formData.posts);};
     let ollPost = props.ollPostElement.map(p => <Post message={p.post} like={p.likes} key={p.id}/>);
 
@@ -19,11 +19,11 @@ const Wall = (props)=>{
             {ollPost}
         </div>
     </div>)
-};
+});
 
 
 
-const InputNewPost = (props) => {
+const InputNewPost = React.memo((props) => {
     return  <form onSubmit={props.handleSubmit}>
         <div>
             <Field  placeholder={"Post"} name={"posts"} component={Textarea} validate={[requiredField, maxLength]} />
@@ -32,7 +32,7 @@ const InputNewPost = (props) => {
             Send Post
         </button>
     </form>
-};
+});
 
 const InputNewPostReduxForm = reduxForm({
     // a unique name for the form
