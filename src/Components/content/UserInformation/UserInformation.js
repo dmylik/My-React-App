@@ -3,6 +3,7 @@ import fordMustang from '../../../assets/photo/ford.mustamg69.jpg'
 import Preloader from "../../../basket/Preloader/Preloader";
 import uim from './user.info.module.css'
 import UserStatus from "./UserStatus";
+import UserStatusHook from "./UserStatusHook";
 
 // Класовая компанента Profile
 const UserInformation = (props) => {
@@ -20,7 +21,7 @@ const UserInformation = (props) => {
                 <div className={uim.userText}>
                     <h3>{props.profile.fullName}</h3>
 
-                    <UserStatus status={props.status} updateStatus={props.updateStatus}/>
+                    <UserStatusHook status={props.status} updateStatus={props.updateStatus}/>
 
                     <br/>
                     <table>
