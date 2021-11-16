@@ -46,29 +46,35 @@ const profileReducer = (state = initialState, action) => {
 export let addPostActionCreator = (text) => ({type: ADD_POST, textPostNew: text});
 export let setUserProfileAC = (profile) => {return {type: SET_USER_PROFILE, profile}};
 
+// export const updateStatusThunkCreator = (status) =>  (dispatch) => {
+//         profileAPI.updateStatus(status).then(data => {
+//             if(data.resultCode ===0)
+//                 dispatch(setStatus(status))
+//         });
+// };
+
+
+// async - перевод в асинхронную функцию
+// await - замена .then ов более приветствуется
 export const getUserProfileThunkCreater = (userID) => {
-    const getUserProfileThunk = (dispatch) => {
-        profileAPI.getUserProfile(userID)
-            .then(data => {
-                dispatch(setUserProfileAC(data));
-            });
-    };
+    const getUserProfileThunk = async (dispatch) => {
+        let data = await profileAPI.getUserProfile(userID);
+        dispatch(setUserProfileAC(data));};
     return getUserProfileThunk
 };
 
-export let setStatus = (status) => {return {type: SET_USER_STATUS, status}};
-
-export const getStatusThunkCreator = (userId) =>  (dispatch) => {
-        profileAPI.getStatus(userId).then(data => {
-            dispatch(setStatus(data))
-        });
+export let setStatus = (status) => {
+    return {type: SET_USER_STATUS, status}
 };
 
-export const updateStatusThunkCreator = (status) =>  (dispatch) => {
-        profileAPI.updateStatus(status).then(data => {
-            if(data.resultCode ===0)
-                dispatch(setStatus(status))
-        });
+export const getStatusThunkCreator = (userId) => async (dispatch) => {
+    let data = await profileAPI.getStatus(userId);
+    dispatch(setStatus(data));
+};
+
+export const updateStatusThunkCreator = (status) => async (dispatch) => {
+    let data = await profileAPI.updateStatus(status);
+    if (data.resultCode === 0) dispatch(setStatus(status));
 };
 
 

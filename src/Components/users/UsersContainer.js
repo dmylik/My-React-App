@@ -62,7 +62,7 @@ class UsersAPI extends React.Component {
 // Контейнерная логика
 let mapStateToProps = (state)=> {
     return {
-        // объект
+        // объект данных
         users: getUsers(state),
         pageSize: getPageSize(state),
         totalCount: getTotalCount(state),
@@ -73,17 +73,14 @@ let mapStateToProps = (state)=> {
 };
 
 let objectAC = {
-    // объект ActionCreater-ов
+    // объект ActionCreater-ов и санок
     follow: followAC,
     unfollow: unfollowAC,
     folProgress: toggleIsFollowingAC,
     getUsersTC: getUsersThunkCreator,
     unFollowTC: unFollowThunkCreator,
     followTC: followThunkCreator
-    // setUsers:setUsersAC,
-    // setCurrentPage:setCurrentPageAC,
-    // setTotalCount: setTotalCountAC,
-    // toggleIsFetching: toggleIsFetchingAC
+
 };
 
 // повторение нижнего (цепочка вызовов)

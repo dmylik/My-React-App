@@ -1,4 +1,5 @@
 import {usersAPI} from "../../api/api";
+import {updateObjInArray} from "../../basket/utils/object-helpers";
 
 const FOLLOW = 'FOLLOW';
 const UN_FOLLOW = 'UN-FOLLOW';
@@ -27,20 +28,13 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userID)
-                        return {...u, followed: true};
-                    return u
-                })
+                users: updateObjInArray(state.users, action.userID, "id", {followed: true})
+
             };
         case UN_FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userID)
-                        return {...u, followed: false};
-                    return u
-                })
+                users: updateObjInArray(state.users, action.userID, "id", {followed: false})
             };
         case SET_USERS:
             return {...state, users: action.users};
@@ -75,53 +69,72 @@ export let toggleIsFollowingAC = (isFollPr, userID) => ({type: TOGGLE_IS_FOLLOWI
 
 export const getUsersThunkCreator = (currentPage, pageSize, isCurentPage) => {
     //thunk санка, которая возвращает users
-    const getUsersThunk = (dispatch) => {
+    return  async (dispatch) => {
         // Вызов preloader (изображение загрузки при слабои инете)
         dispatch(toggleIsFetchingAC(true));
 
-        if(isCurentPage===true)
+        if (isCurentPage === true)
             dispatch(setCurrentPageAC(currentPage));
 
         // axion запросы с json данных
         // alert("New object"); отрабатывет один раз
         // get запрос находится в api в getUsers
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setUsersAC(data.items));
-                dispatch(setTotalCountAC(data.totalCount));
-                dispatch(toggleIsFetchingAC(false));
-            });
+        let data = await usersAPI.getUsers(currentPage, pageSize);
+        dispatch(setUsersAC(data.items));
+        dispatch(setTotalCountAC(data.totalCount));
+
+        dispatch(toggleIsFetchingAC(false));
+
     };
-    return getUsersThunk;
 };
+
+
+//  Одинаковый код двух санок вынесли в одну функцию (рефакторинг)
+// Дублирующаяся Логика
+const followUnFlow = async (dispatch, userID, apiMethod, actionCreater) => {
+    dispatch(toggleIsFollowingAC(true, userID));
+    let data = await apiMethod(userID);
+    if (data.resultCode === 0)
+        dispatch(actionCreater(userID));
+    dispatch(toggleIsFollowingAC(false, userID));
+
+}
 
 // Санка отписки
-export const unFollowThunkCreator = (userID)=> {
-    const unFollowThunk = (dispatch) => {
-        dispatch(toggleIsFollowingAC(true, userID));
-        usersAPI.userDeleteFollow(userID)
-            .then(data => {
-                if (data.resultCode === 0)
-                    dispatch(unfollowAC(userID));
-                dispatch(toggleIsFollowingAC(false, userID));
-            });
+export const unFollowThunkCreator = (userID) => {
+    return async (dispatch) => {
+        let apiMethod = usersAPI.userDeleteFollow.bind(userID);
+        let actionCreater = unfollowAC;
+
+        followUnFlow(dispatch, userID, apiMethod, actionCreater);
+
+        // dispatch(toggleIsFollowingAC(true, userID));
+        // let data = await apiMethod(userID);
+        // if (data.resultCode === 0)
+        //     dispatch(actionCreater(userID));
+        // dispatch(toggleIsFollowingAC(false, userID));
     };
-    return unFollowThunk;
 };
 
+
 // Санка подписки
-export const followThunkCreator = (userID)=> {
-    const followThunk = (dispatch) => {
-        dispatch(toggleIsFollowingAC(true, userID));
-        usersAPI.userPostFollow(userID)
-            .then(data => {
-                if (data.resultCode === 0)
-                    dispatch(followAC(userID));
-                dispatch(toggleIsFollowingAC(false, userID));
-            });
-    };
-    return followThunk;
+//  Одинаковый код двух санок вынесли в одну функцию (рефакторинг)
+export const followThunkCreator = (userID) => {
+    return async (dispatch) => followUnFlow(dispatch, userID, usersAPI.userPostFollow.bind(userID), followAC);
 };
+
+
+// Санка подписки
+// export const followThunkCreator = (userID)=> (dispatch) => {
+//         dispatch(toggleIsFollowingAC(true, userID));
+//         usersAPI.userPostFollow(userID)
+//             .then(data => {
+//                 if (data.resultCode === 0)
+//                     dispatch(followAC(userID));
+//                 dispatch(toggleIsFollowingAC(false, userID));
+//             });
+//
+// };
 
 
 export default usersReducer

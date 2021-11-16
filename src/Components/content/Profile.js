@@ -6,20 +6,20 @@ import Preloader from "../../basket/Preloader/Preloader";
 import UserInformation from "./UserInformation/UserInformation";
 import Wall from "./Wall/Wall";
 
-const Profile = React.memo((props) => {
-    if(!props.profile ){
+const Profile = React.memo(({profile, status, updateStatus, ollPostElement, addPost }) => {
+    if(!profile ){
         return <Preloader/>
     } else
     return(
         <div className={pm.item}>
-            <UserInformation profile={props.profile}
-                             status ={props.status}
-                             updateStatus={props.updateStatus}
+            <UserInformation profile={profile}
+                             status ={status}
+                             updateStatus={updateStatus}
             />
 
-            <Wall ollPostElement={props.ollPostElement}
-                  profile={props.profile}
-                  addPost={props.addPost}
+            <Wall ollPostElement={ollPostElement}
+                  profile={profile}
+                  addPost={addPost}
             />
         </div>
     )

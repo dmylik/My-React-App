@@ -9,8 +9,8 @@ import styles from '../../basket/FormsControls/FormsControls.module.css'
 
 
 
-const LoginForm = (props) =>{
-    return  <form onSubmit={props.handleSubmit}>
+const LoginForm = (handleSubmit,error) =>{
+    return  <form onSubmit={handleSubmit}>
         <div>
             <Field placeholder={"Email"} name={"email"} validate={[requiredField]} component={Input}/>
         </div>
@@ -21,8 +21,7 @@ const LoginForm = (props) =>{
             <Field type={"checkbox"} name={"rememberMe"}  component={Input}/> remember me
         </div>
 
-        {props.error &&
-        <div className={styles.formOllError}> {props.error} </div>}
+        {error && <div className={styles.formOllError}> {error} </div>}
         <div>
             <button>
                 Login
