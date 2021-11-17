@@ -41,7 +41,7 @@ const usersReducer = (state = initialState, action) => {
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.currentPage};
         case SET_TOTAL_COUNT:
-            return {...state, totalCount: action.totalCount > 500 ? 500 : action.totalCount};
+            return {...state, totalCount: action.totalCount };
         case TOGGLE_IS_SVG:
             return {...state, isFetching: action.isFetching};
         case TOGGLE_IS_FOLLOWING:

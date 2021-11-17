@@ -10,7 +10,6 @@ class  UserStatus extends React.Component {
         this.setState({
             editMode: true
         });
-
         // this.forceUpdate(); - костыль
     };
     deactivateEditMode = () => {
@@ -22,9 +21,7 @@ class  UserStatus extends React.Component {
         this.forceUpdate();
     };
 
-    onStatusChange = (e) =>{
-        this.setState({status: e.currentTarget.value});
-    };
+    onStatusChange = (e) =>{this.setState({status: e.currentTarget.value});};
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(prevProps.status !== this.props.status)
