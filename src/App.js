@@ -1,6 +1,6 @@
 import './App.css';
 import React, {Component} from "react";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, withRouter} from "react-router-dom";
 import ProfileContainer from "./Components/content/ProfileContainer";
 import HeaderContainer from "./Components/header/HeaderContainer";
 import Login from "./Components/login/Login";
@@ -52,9 +52,9 @@ let AppContainer = compose(
 
 const MainApp = (props) => {
     return <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter >
             <AppContainer/>
-        </BrowserRouter>
+        </HashRouter>
     </Provider>
 };
 
