@@ -1,26 +1,23 @@
 .userItem {
     width: 50%;
     display: table;
-
 }
 
 .userImage{
     display: table-cell;
     vertical-align: top;
-
 }
 
 .logoMustang img{
     width: 350px;
     height: 350px;
 }
+
 .userText{
     vertical-align: top;
     horiz-align: left;
     display: table-cell;
     padding: 10px;
-
-
 }
 
 .logoUser img{
@@ -28,3 +25,21 @@
     height: 300px;
 }
 
+
+.formControl.error input,
+.formControl.error textarea {
+    border:  solid #ac0000 2px;
+
+}
+
+
+.formControl.error span {
+    color: #ba0000;
+
+}
+
+.formOllError{
+    border: red 2px solid;
+    padding: 5px;
+    color: coral;
+}

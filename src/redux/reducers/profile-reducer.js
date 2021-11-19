@@ -1,8 +1,10 @@
 import {profileAPI} from "../../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_USER_STATUS= 'SET-USER-STATUS';
+const SAVE_PHOTO= 'SAVE-PHOTO';
 
 //Инициализация данных по умолчанию пока небыли переданный другие данные
 let initialState = {
@@ -13,7 +15,6 @@ let initialState = {
             {id: 4, post: 'This is bad idea', likes: 6},
             {id: 5, post: 'I know((', likes: 23},
             {id: 6, post: 'oh no', likes: 1}],
-        profile: null,
         status: ''
     };
 
@@ -33,8 +34,8 @@ const profileReducer = (state = initialState, action) => {
                 postArray: [...state.postArray, newPost]};
         case SET_USER_PROFILE: return {...state, profile: action.profile};
         case SET_USER_STATUS: return {...state ,status:  action.status};
-
-
+        case SAVE_PHOTO: return {
+            ...state ,postArray: {...state.postArray, photos: action.photos}};
         default:  return state;
     }
 };
@@ -45,6 +46,8 @@ const profileReducer = (state = initialState, action) => {
 // создание элементов action для каждой команды
 export let addPostActionCreator = (text) => ({type: ADD_POST, textPostNew: text});
 export let setUserProfileAC = (profile) => {return {type: SET_USER_PROFILE, profile}};
+export let savePhotoAC = (photos) => {return {type: SAVE_PHOTO, photos}};
+export let setStatus = (status) => {return {type: SET_USER_STATUS, status}};
 
 // export const updateStatusThunkCreator = (status) =>  (dispatch) => {
 //         profileAPI.updateStatus(status).then(data => {
@@ -56,16 +59,12 @@ export let setUserProfileAC = (profile) => {return {type: SET_USER_PROFILE, prof
 
 // async - перевод в асинхронную функцию
 // await - замена .then ов более приветствуется
-export const getUserProfileThunkCreater = (userID) => {
-    const getUserProfileThunk = async (dispatch) => {
+export const getUserProfileThunkCreater = (userID) => async (dispatch) => {
         let data = await profileAPI.getUserProfile(userID);
-        dispatch(setUserProfileAC(data));};
-    return getUserProfileThunk
+        dispatch(setUserProfileAC(data));
 };
 
-export let setStatus = (status) => {
-    return {type: SET_USER_STATUS, status}
-};
+
 
 export const getStatusThunkCreator = (userId) => async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
@@ -74,7 +73,27 @@ export const getStatusThunkCreator = (userId) => async (dispatch) => {
 
 export const updateStatusThunkCreator = (status) => async (dispatch) => {
     let data = await profileAPI.updateStatus(status);
-    if (data.resultCode === 0) dispatch(setStatus(status));
+    if (data.data.resultCode === 0) dispatch(setStatus(status));
+};
+
+export const savePhotoThunkCreator = (file) => async (dispatch) => {
+    let data = await profileAPI.savePhoto(file);
+    if (data.data.resultCode === 0) dispatch(savePhotoAC(data.data.photos));
+};
+
+export const saveUserInfoThunkCreator = (profile) => async (dispatch, getState) => {
+    let data = await profileAPI.saveUserInfo(profile);
+    let userId = getState().authReducer.userId;
+
+    if (data.data.resultCode === 0)
+        dispatch(getUserProfileThunkCreater(userId));
+    else {
+        let message = data.data.messages.length > 0 ? data.data.messages[0] : " Some Error ";
+        dispatch(stopSubmit("userData", {_error: message}));
+        return Promise.reject(data.data.messages[0]);
+        // dispatch(stopSubmit("userData", {"contacts" :{"vk ": message}}));
+        // dispatch(stopSubmit("userData", {"contacts" :{"facebook": message}}));
+    }
 };
 
 

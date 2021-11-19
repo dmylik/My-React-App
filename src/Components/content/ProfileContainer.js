@@ -2,7 +2,7 @@ import React from 'react'
 import {
     addPostActionCreator,
     getStatusThunkCreator,
-    getUserProfileThunkCreater,
+    getUserProfileThunkCreater, savePhotoThunkCreator, saveUserInfoThunkCreator,
     setUserProfileAC,
     updateStatusThunkCreator
 } from "../../redux/reducers/profile-reducer";
@@ -15,7 +15,7 @@ import {compose} from "redux";
 
 
 class ProfileClass extends React.Component {
-    componentDidMount() {
+    refreshProfile () {
         // Получение id выбраного пользователся
         let userID = this.props.match.params.userId;
         // если его нет, переходим на свой профиль
@@ -24,10 +24,17 @@ class ProfileClass extends React.Component {
             if(!userID)
                 this.props.history.push("/login");
         }
-
-
         this.props.getUserProfileTC(userID);
         this.props.getStatusTC(userID);
+    }
+    componentDidMount() {this.refreshProfile();}
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.match.params.userId != prevProps.match.params.userId){
+            this.refreshProfile();
+
+
+        }
     }
 
     render() {
@@ -36,6 +43,9 @@ class ProfileClass extends React.Component {
         return(<ProfileAPI {...this.props}
                            ollPostElement={this.props.ollPost.postArray}
                            addPost={this.props.addPost}
+                           isOwner = {!this.props.match.params.userId}
+                           savePhoto ={this.props.savePhoto}
+                           saveUserInfo={this.props.saveUserInfo}
 
                            profile={this.props.profile}
                            status ={this.props.status}
@@ -68,7 +78,9 @@ let objectAC = {
     setUserProfile: setUserProfileAC,
     getUserProfileTC: getUserProfileThunkCreater,
     getStatusTC: getStatusThunkCreator,
-    updateStatusTC: updateStatusThunkCreator
+    updateStatusTC: updateStatusThunkCreator,
+    savePhoto: savePhotoThunkCreator,
+    saveUserInfo: saveUserInfoThunkCreator
 
 };
 

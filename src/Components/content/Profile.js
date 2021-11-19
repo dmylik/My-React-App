@@ -6,7 +6,9 @@ import Preloader from "../../basket/Preloader/Preloader";
 import UserInformation from "./UserInformation/UserInformation";
 import Wall from "./Wall/Wall";
 
-const Profile = React.memo(({profile, status, updateStatus, ollPostElement, addPost }) => {
+const Profile = React.memo(({profile, status, updateStatus,
+                                ollPostElement, addPost, isOwner, savePhoto,
+                                saveUserInfo }) => {
     if(!profile ){
         return <Preloader/>
     } else
@@ -15,6 +17,9 @@ const Profile = React.memo(({profile, status, updateStatus, ollPostElement, addP
             <UserInformation profile={profile}
                              status ={status}
                              updateStatus={updateStatus}
+                             isOwner = {isOwner}
+                             savePhoto = {savePhoto}
+                             saveUserInfo = {saveUserInfo}
             />
 
             <Wall ollPostElement={ollPostElement}
