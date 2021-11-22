@@ -4,6 +4,8 @@ import {Input, Textarea} from "../../../../basket/FormsControls/FormsControls";
 import {Field, reduxForm} from "redux-form";
 import uim from "../user.info.module.css";
 import styles from "../../../../basket/FormsControls/FormsControls.module.css";
+import btn from "../../../../Style/Button.module.css";
+
 
 const UserDataForm = ({profile, status, updateStatus, handleSubmit, error})=>{
     return <form onSubmit={handleSubmit}>
@@ -32,7 +34,9 @@ const UserDataForm = ({profile, status, updateStatus, handleSubmit, error})=>{
             </table>
             {error && <div className={styles.formOllError}> {error} </div>}
         </div>
-        <button >Save</button>
+        <div >
+            <button className={btn.button}>Save</button>
+        </div>
     </form>
 };
 

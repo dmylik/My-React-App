@@ -2,18 +2,18 @@ import React, {useState} from 'react'
 import fordMustang from '../../../assets/photo/ford.mustamg69.jpg'
 import Preloader from "../../../basket/Preloader/Preloader";
 import uim from './user.info.module.css'
-import UserStatusHook from "./UserStatusHook";
-import UserDataForm from "./UserDataForm/UserDataForm";
-import {Field} from "redux-form";
-import {Textarea} from "../../../basket/FormsControls/FormsControls";
+import btn from '../../../Style/Button.module.css'
+import UserDataForm from "./UserContacts/UserDataForm";
+import UserContacts from "./UserContacts/UserContacts";
+
 
 // Класовая компанента Profile
 // profile/20282
 const UserInformation = React.memo((props) => {
     let [editMode, setEditMode] = useState(false);
 
-    const onSubmit =  (formData) =>{
-        props.saveUserInfo(formData).then(()=>{setEditMode(false);})
+    const onSubmit =  (formData1) =>{
+        props.saveUserInfo(formData1).then(()=>{setEditMode(false);})
         // setEditMode(false);
     };
 
@@ -31,8 +31,9 @@ const UserInformation = React.memo((props) => {
                         ? <div className={uim.logoMustang}><img src={fordMustang}/></div>
                         : <div className={uim.logoUser}><img src={props.profile.photos.large}/></div>}
                     {props.isOwner && <div>
-                    <input type={"file"} onChange={onMainPhotoSelected}/>
-                    <button onClick={()=> {setEditMode(true)}}>Edit</button></div>
+                    <input  type={"file"} onChange={onMainPhotoSelected} className={btn.TypeText}/>
+
+                    <button className={btn.button} onClick={()=> {setEditMode(true)}}>Edit</button></div>
                     }
                 </div>
 
@@ -42,6 +43,7 @@ const UserInformation = React.memo((props) => {
                                     onSubmit={onSubmit}
                                     status={props.status}
                                     updateStatus={props.updateStatus} />
+
                     : <UserContacts profile={props.profile}
                                     status={props.status}
                                     updateStatus={props.updateStatus}/>
@@ -49,31 +51,5 @@ const UserInformation = React.memo((props) => {
             </div>
         )
 });
-
-const UserContacts = ({profile, status, updateStatus})=>{
-    return <div className={uim.userText}>
-        <h3>{profile.fullName}</h3>
-        <UserStatusHook status={status} updateStatus={updateStatus}/>
-        <div > Looking for a job: {profile.lookingForAJob? "Yes" : "No"}</div>
-        <div><b>My professional skills: </b> {profile.lookingForAJobDescription}</div>
-        <div><b>About me: </b> {profile.aboutMe}</div>
-
-        <table className={uim.userText}>
-            {Object.keys(profile.contacts).map(key => {
-                return <Contact contactTitle={key} contactValue={profile.contacts[key]} key={key}/>
-            })}
-        </table>
-    </div>
-};
-
-const Contact = ({contactTitle, contactValue}) => {
-    return <div>
-        {contactValue ?
-        <tr>
-            <td><b>{contactTitle}:</b></td>
-            <td>{contactValue}</td>
-        </tr> : ''}
-    </div>
-};
 
 export default UserInformation

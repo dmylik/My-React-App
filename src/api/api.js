@@ -2,7 +2,7 @@ import * as axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    headers: {"API-KEY": "4558af43-6a15-453e-98d3-2645a1eab72c"},
+    headers: {"API-KEY": "d2c830c0-1c01-452e-85bf-c08fac5a15a0"},
     baseURL: 'https://social-network.samuraijs.com/api/1.0/'
 
 // axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
@@ -57,14 +57,16 @@ export const headerAPI = {
 };
 
 export const loginAPI = {
-    login(email, password, rememberMe){
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email, password, rememberMe = false, captcha = null){
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
             .then(response => {return response.data})
     },
     logout(){
         return instance.delete(`auth/login`)
             .then(response => {return response.data})
-
     }
 };
 
+export const securityAPI = {
+    getCaptchaURL(){return instance.get(`security/get-captcha-url`)}
+};

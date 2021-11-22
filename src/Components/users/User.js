@@ -2,7 +2,7 @@ import React from 'react'
 import styleUM from './style/Users.module.css'
 import userPhotoE from '../../assets/photo/photoElizabetOlsen.jpg'
 import {NavLink} from "react-router-dom";
-
+import btn from '../../Style/Button.module.css'
 
 // Функциональная (для Контейнерной) компанента
 let User = ({user, folProg, unFollowTC, followTC}) =>{
@@ -19,17 +19,17 @@ let User = ({user, folProg, unFollowTC, followTC}) =>{
                             <img src={user.photos.small != null ? user.photos.small : userPhotoE}/>
                         </NavLink>
                     </div>
-                    <div>
+                    <div className={styleUM.ollBtn}>
                         {user.followed
                             // onClick вызови анонимную стрелочную функцию
                             // внутри  обращение к props
                             // из props берется
                             // для disable кнопки, пока не пернутся данные с сервера
-                            ? <button disabled={folProg.some(id => id===user.id)}
+                            ? <button className={btn.button} disabled={folProg.some(id => id===user.id)}
                                       onClick={() => {unFollowTC(user.id);}}>
                                 Follow</button>
 
-                            : <button disabled={folProg.some(id => id===user.id)}
+                            : <button className={btn.button} disabled={folProg.some(id => id===user.id)}
                                       onClick={() => {followTC(user.id);}}>
                                 UnFollow</button>
                         }

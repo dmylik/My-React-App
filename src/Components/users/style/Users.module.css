@@ -2,3 +2,6 @@
     width: 100px;
     border-radius: 20px;
 }
+.ollBtn button {
+    padding: 3px 6px;
+}

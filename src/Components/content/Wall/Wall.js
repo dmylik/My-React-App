@@ -4,6 +4,7 @@ import {Field, reduxForm} from "redux-form";
 import Post from "../Post/Post";
 import {maxLengthCreator, requiredField} from "../../../basket/validators/validators";
 import {Textarea} from "../../../basket/FormsControls/FormsControls";
+import btn from "../../../Style/Button.module.css";
 
 let maxLength =  maxLengthCreator(10);
 
@@ -28,9 +29,7 @@ const InputNewPost = React.memo((props) => {
         <div>
             <Field  placeholder={"Post"} name={"posts"} component={Textarea} validate={[requiredField, maxLength]} />
         </div>
-        <button>
-            Send Post
-        </button>
+        <button className={btn.button}>Send Post</button>
     </form>
 });
 

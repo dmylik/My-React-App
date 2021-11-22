@@ -30,6 +30,6 @@ const store = createStore(reducers,  composeEnhancers(applyMiddleware(thunkMiddl
 //объявлять их не нужно
 
 // let store = createStore(reducers, applyMiddleware(thunkMiddleware));
-// window.store = store;
+window.store = store;
 
 export default store;
