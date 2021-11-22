@@ -16,16 +16,16 @@ import Login from "./Components/login/LoginComponents";
 // Пока вызова не будет загружаться эта страница не будет
 // <React.Suspense> - необходим для временного пропуска данной загрузки
 // позволяет не загружать редко используеммые страницы
-const UsersContainer = React.lazy(()=> import("./Components/users/UsersContainer"));
-const DialogsContainer = React.lazy(()=> import("./Components/dialogs/DialogsContainer"));
+const UsersContainer = React.lazy(() => import("./Components/users/UsersContainer"));
+const DialogsContainer = React.lazy(() => import("./Components/dialogs/DialogsContainer"));
 
 
 class App extends Component {
-    // Глобальная отработка ошибок
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
         alert("Some error occurred");
         console.error(promiseRejectionEvent);
-    }ж
+
+    }
 
     // ожидание инитиализании данных в компоненту
     componentDidMount() {
@@ -35,7 +35,6 @@ class App extends Component {
 
     componentWillUnmount() {
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-
     }
 
     render() {
@@ -44,29 +43,31 @@ class App extends Component {
             return <Preloader/>
         else
             return (<div className='app-wrapper'>
-                        <HeaderContainer/>
-                        <NavContainer/>
-                        <div className='app-wrapper-content'>
-                            <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
-                            <Route path='/users' render={withSuspense(UsersContainer)}/>
-                            <Route path='/login' render={() => <Login/>}/>
-                            <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                        </div>
+                    <HeaderContainer/>
+                    <NavContainer/>
+                    <div className='app-wrapper-content'>
+                        <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+                        <Route path='/users' render={withSuspense(UsersContainer)}/>
+                        <Route path='/login' render={() => <Login/>}/>
+                        <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                    </div>
                 </div>
             )
     }
 }
 
-const mapStateToProps = (state) => {return {initialized: state.app.initialized}};
+const mapStateToProps = (state) => {
+    return {initialized: state.app.initialized}
+};
 
 let AppContainer = compose(
     withRouter,
-    connect(mapStateToProps, { initializeApp} ))
+    connect(mapStateToProps, {initializeApp}))
 (App);
 
 const MainApp = (props) => {
     return <Provider store={store}>
-        <HashRouter >
+        <HashRouter>
             <AppContainer/>
         </HashRouter>
     </Provider>
