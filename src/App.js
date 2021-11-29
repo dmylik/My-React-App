@@ -24,8 +24,7 @@ class App extends Component {
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
         alert("Some error occurred");
         console.error(promiseRejectionEvent);
-
-    }
+    };
 
     // ожидание инитиализании данных в компоненту
     componentDidMount() {

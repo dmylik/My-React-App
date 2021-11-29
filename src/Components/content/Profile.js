@@ -1,6 +1,6 @@
 import React from 'react'
 import pm from './Profile.module.css'
-import Post from "./Post/Post";
+import Post from "./Wall/Post/Post";
 import fordMustang from '../../assets/photo/ford.mustamg69.jpg'
 import Preloader from "../../basket/Preloader/Preloader";
 import UserInformation from "./UserInformation/UserInformation";

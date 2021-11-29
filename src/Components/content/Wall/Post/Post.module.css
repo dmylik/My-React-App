@@ -1,0 +1,39 @@
+.item {
+    /*border: 2px solid #010f7e;*/
+    width: 50%;
+    margin: 8px;
+}
+
+.img {
+    width: 60px;
+    border-radius: 6px;
+}
+
+.block{
+    padding: 0 4px 0 4px;
+    display: inline-block;
+}
+.txtPost{
+    width: 70%;
+    vertical-align: top;
+    /*border: 2px solid #7e291f;*/
+}
+
+.txtPost p {
+    margin: 1px;
+    vertical-align: top;
+    width: 100%;
+    word-wrap: break-word;
+    font-size: 18px;
+}
+
+.LikeIMG {
+    width: 16px;
+}
+
+.txtLike{
+    margin: 5px;
+    font-size: 14px;
+}
+
+

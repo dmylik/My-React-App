@@ -22,11 +22,11 @@ let mapStateToProps = (state) =>{return { ollMess: state.messagesPage}};
 
 let objectDispatchToProps = {sendMessage: sendMessageCreator};
 
-compose(
-    connect(mapStateToProps, objectDispatchToProps),
-    withAuthRedirect
-)(DialogsAPI);
-
+// compose(
+//     connect(mapStateToProps, objectDispatchToProps),
+//     withAuthRedirect
+// )(DialogsAPI);
+//
 
 // // HOC хок для проверки подкиски
 // let AuthRedirectComponent = withAuthRedirect(DialogsAPI);

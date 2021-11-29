@@ -1,0 +1,33 @@
+.header{
+    grid-area: h;
+    background-color: #caffbb;
+    padding: 3px;
+}
+
+
+.btnOut{
+    float: right;
+    vertical-align: middle;
+
+}
+
+.loginBlock button {
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+.block{
+    padding: 0 4px 0 4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.block a {
+    color: black;
+    text-decoration: none;
+
+}
+.image{
+    height: 3.5em;
+
+}

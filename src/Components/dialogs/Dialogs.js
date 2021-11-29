@@ -37,8 +37,7 @@ const Dialogs = React.memo((props) => {
 const InputTextMessage = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field  placeholder={"Text"} name={"message"} component={Textarea}
-                    validate={[requiredField, maxLength]}/>
+            <Field  placeholder={"Text"} name={"message"} component={Textarea} validate={[requiredField, maxLength]}/>
         </div>
         <button>
             Send Message

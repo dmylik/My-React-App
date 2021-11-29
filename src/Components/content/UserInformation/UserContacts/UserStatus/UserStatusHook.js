@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import style from './user.status.module.css'
 
 const  UserStatusHook = (props) =>{
     // useState - локальный state, возвращает массив
@@ -25,11 +26,11 @@ const  UserStatusHook = (props) =>{
 
     return <div>
             {!editMode
-                ?<div>
-                <span onDoubleClick={activateEditMode}>
-                    {status || "__________"}</span>
-                </div>
-                :<div>
+                ?<div className={style.userStatus} >
+                    <span onDoubleClick={activateEditMode}>
+                        {status || "__________"}</span>
+                    </div>
+                :<div className={style.userStatusWrite}>
                     <input  onChange={onStatusChange}
                             onBlur={deactivateEditMode}
                             autoFocus={true}

@@ -1,6 +1,6 @@
 import React from "react"
 import {create} from "react-test-renderer"
-import UserStatus from "../UserStatus";
+import UserStatus from "../UserContacts/UserStatus/UserStatus";
 
 describe("UserStatus component" , () => {
     test("status from props be in the state", () => {
