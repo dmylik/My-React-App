@@ -1,5 +1,5 @@
 import React from 'react'
-import dm from '../../Style/gialogs/Dialogs.module.css'
+import dm from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 import {Field, reduxForm} from "redux-form";
 import {Textarea} from "../../basket/FormsControls/FormsControls";

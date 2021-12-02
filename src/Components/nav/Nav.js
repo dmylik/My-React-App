@@ -1,5 +1,5 @@
 import React from 'react';
-import nm from '../../Style/Nav.module.css';
+import nm from './Nav.module.css';
 import {NavLink} from "react-router-dom";
 import NavFriends from "./navFriends/NavFriends";
 

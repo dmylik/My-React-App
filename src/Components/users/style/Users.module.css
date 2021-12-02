@@ -1,7 +1,31 @@
 .userImage img{
-    width: 100px;
+    width: 130px;
+    height: 130px;
     border-radius: 20px;
 }
+
 .ollBtn button {
-    padding: 3px 6px;
+    padding: 6px 18px;
+    margin: 2.5em 1em 0;
+
+}
+.divRow{
+    background-color: #fff9b8;
+    margin: 0.5rem 3em 0 1em;
+    border-radius: 20px;
+
+
+    display: flex;
+    flex-direction: row;
+}
+
+.divRow b{
+    margin: 1em;
+}
+
+.Name{
+    font-size: 24px;
+}
+.Status{
+    font-size: 19px;
 }

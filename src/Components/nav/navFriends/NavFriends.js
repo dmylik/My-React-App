@@ -1,4 +1,4 @@
-import nm from "../../../Style/Nav.module.css";
+import nm from "../Nav.module.css";
 import nfm from "./nav.friends.module.css";
 import React from "react";
 
