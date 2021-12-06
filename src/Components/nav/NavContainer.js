@@ -6,22 +6,30 @@ import {getUserFriendsProfileTC} from "../../redux/reducers/nav-reducer";
 
 
 class NavAPI extends React.Component {
-    componentDidMount() {
-        this.props.getUserFriend(2,2);
-        this.props.getUserFriend(1034,3);
-        this.props.getUserFriend(19490,4);
+    componentDidMount() {this.ollUser()}
+
+    ollUser () {
+        this.props.getUserFriend(2,0);
+        this.props.getUserFriend(20000,1);
+        this.props.getUserFriend(19223,2);
     }
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     debugger;
+    //     if(this.props.navPage.profileFriends != prevProps.navPage.profileFriends) {
+    //         console.log(this.props.navPage.profileFriends != prevProps.navPage.profileFriends)
+    //         // this.ollUser()
+    //     }
+    // }
+
     render() {
-        return<>
-                <Nav navPage = {this.props.navPage}/>
-            </>
+        return<><Nav navPage = {this.props.navPage}/></>
     }
 }
 
 let mapStateToProps = (state)=> {
     return {
-        navPage: state.navPage
+        navPage: state.navPage,
     }
 };
 

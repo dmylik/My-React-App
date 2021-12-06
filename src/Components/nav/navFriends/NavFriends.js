@@ -1,15 +1,20 @@
 import nm from "../Nav.module.css";
 import nfm from "./nav.friends.module.css";
 import React from "react";
+import {NavLink} from "react-router-dom";
 
-
+let EizaGonsalrzURL = 'https://img5.goodfon.ru/original/960x800/b/84/eiza-gonzalez-devushka-vzgliad-figura-krasotka-poza-aktrisa.jpg';
 
 const NavFriends =(props)=>{
-    let EizaGonsalrzURL = 'https://img5.goodfon.ru/original/960x800/b/84/eiza-gonzalez-devushka-vzgliad-figura-krasotka-poza-aktrisa.jpg';
     return (
         <div className={nfm.navfriends}>
-            <div><img className={nfm.img} src={EizaGonsalrzURL}/></div>
-            <div className={nfm.nameFriend} ><h4>{props.name}</h4></div>
+            <NavLink to={'/profile/'+ props.userId}>
+            {props.photo
+                ? <div className={nfm.Photo}><img className={nfm.img} src={props.photo}/></div>
+                : <div className={nfm.Photo}><img className={nfm.img} src={EizaGonsalrzURL}/></div>
+            }
+            </NavLink>
+            <div className={nfm.nameFriend} ><b>{props.name}</b></div>
         </div>
 
     )

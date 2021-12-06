@@ -4,7 +4,8 @@ import {NavLink} from "react-router-dom";
 import NavFriends from "./navFriends/NavFriends";
 
 const Nav = (props) => {
-    let treeFr = props.navPage.navFriends.map(f => <NavFriends name={f.nameFriend} key ={f.id}/>);
+    let treeFr = props.navPage.profileFriends.reverse().map(
+        f => <NavFriends name={f.profile.fullName} photo={f.profile.photos.small} userId ={f.profile.userId} key ={f.id}/>);
 
     return (
         <nav className={nm.nav}>

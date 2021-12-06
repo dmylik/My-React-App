@@ -1,5 +1,5 @@
 import React from 'react'
-import {sendMessageCreator} from "../../redux/reducers/dialogs-reducer";
+import {getDialogUserThunkCreater, sendMessageCreator, setDialogIdCreater} from "../../redux/reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
@@ -7,6 +7,15 @@ import {compose} from "redux";
 
 
 class DialogsAPI extends React.Component{
+    componentDidMount() {
+        let i = 0;
+        this.props.ArrayUserIdToDialog.forEach((id)=>{this.props.getDialogUserTC(id, i++)})
+    }
+
+    setID = (id) => {
+        debugger
+        this.props.setDialogId(id)}
+
     onSendMessageClick =(txt)=> {this.props.sendMessage(txt);};
 
     render() {
@@ -14,13 +23,24 @@ class DialogsAPI extends React.Component{
                          newMessageBody ={this.props.ollMess.newMessageBody}
                          dialogsArray = {this.props.ollMess.dialogsArray}
                          messagesElement ={this.props.ollMess.messagesArray}
+                         dialogUser ={this.props.ollMess.dialogUser}
+                         setID ={this.setID}
+                         dialogId = {this.props.dialogId}
         />)
     }
 };
 
-let mapStateToProps = (state) =>{return { ollMess: state.messagesPage}};
+let mapStateToProps = (state) =>{return {
+    ollMess: state.messagesPage,
+    dialogId: state.messagesPage.dialogId,
+    ArrayUserIdToDialog: state.messagesPage.ArrayUserIdToDialog
+}};
 
-let objectDispatchToProps = {sendMessage: sendMessageCreator};
+let objectDispatchToProps = {
+    sendMessage: sendMessageCreator,
+    getDialogUserTC: getDialogUserThunkCreater,
+    setDialogId: setDialogIdCreater
+};
 
 // compose(
 //     connect(mapStateToProps, objectDispatchToProps),

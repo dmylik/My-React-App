@@ -1,4 +1,8 @@
+import {profileAPI} from "../../api/api";
+
 const SEND_MESSAGE = 'SEND_MESSAGE';
+const SET_USER_DIALOG = 'SET_USER_DIALOG';
+const SET_ID_DIALOG = 'SET_ID_DIALOG';
 
 //Инициализация данных по умолчанию пока небыли переданный другие данные
 let initialState = {
@@ -10,7 +14,9 @@ let initialState = {
             {if: 5, name: 'Kirill'},
             {if: 6, name: 'Aleksii'},
             {if: 7, name: 'Leha'}],
-
+        dialogUser: [],
+        ArrayUserIdToDialog: [19223, 20330, 19788, 20336, 19626, 19348, 2],
+        dialogId: 2,
         messagesArray: [
             {id: 1, message: 'Hello Pes'},
             {id: 2, message: 'How Are you'},
@@ -33,6 +39,13 @@ const dialogsReducer = (state = initialState, action) => {
             // stateCopy.messagesArray.push({id: 6, message: body});
             // stateCopy.newMessageBody = '';
             return stateCopy;
+        case SET_USER_DIALOG: {
+            return {...state,
+            dialogUser:[...state.dialogUser, {id: action.arr[0], user: action.arr[1]}]}}
+        case SET_ID_DIALOG: {
+            debugger
+            return {...state, dialogId:  action.dialogId}}
+
 
             // stateCopy.newMessageBody = action.textMessageNew;
             // return stateCopy;
@@ -41,11 +54,25 @@ const dialogsReducer = (state = initialState, action) => {
     }
 };
 
+
+
 // Если Reducer-е есть нужная команда из action
 // она выполнится и вернет свой state для изменения
 // Если команд не обнаружено, вохвращается state без изменения
 
 // создание элементов action для каждой команды
 export let sendMessageCreator = (text) => ({type: SEND_MESSAGE, textMessageNew: text});
+export let setDialogIdCreater = (dialogId) => ( {type: SET_ID_DIALOG, dialogId});
+
+
+export let setDialogUserAC = (arrTC, id) => {
+    let arr = [id, arrTC];
+    return {type: SET_USER_DIALOG, arr}};
+
+export let getDialogUserThunkCreater = (userID, id) => async (dispatch) => {
+        let data = await profileAPI.getUserProfile(userID);
+        let arrTC= { name: data.fullName, userId: data.userId, small: data.photos.small}
+        dispatch(setDialogUserAC(arrTC, id));
+}
 
 export default dialogsReducer;

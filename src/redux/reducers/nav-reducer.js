@@ -3,15 +3,7 @@ import {profileAPI} from "../../api/api";
 
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 
-let initialState = {
-        navFriends: [
-            {nameFriend: 'Elsa'},
-            {nameFriend: 'Emma'},
-            {nameFriend: 'Emilia'}],
-        profileFriends: [
-            {id: 1, profile: {}}
-        ]
-    };
+let initialState = {profileFriends: []};
 
 //Reducer для диалогов, принимает:
 //state - только для себя (navPage) и
@@ -30,7 +22,6 @@ export let setUserProfileAC = (profile, id) => {
 
 export const getUserFriendsProfileTC = (userID, id) => async (dispatch) => {
     let data = await profileAPI.getUserProfile(userID);
-    debugger
     dispatch(setUserProfileAC(data, id));
 };
 
