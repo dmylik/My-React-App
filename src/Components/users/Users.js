@@ -13,7 +13,9 @@ const Users = (props) => {
             [...props.users].reverse().map(u => <User user={u}
                                        folProg={props.folProg}
                                        unFollowTC={props.unFollowTC}
-                                       followTC={props.followTC}/>)
+                                       followTC={props.followTC}
+                                       addUserIdMessage={props.addUserIdMessage}
+            />)
         }
     </div>
 };

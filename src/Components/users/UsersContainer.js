@@ -16,6 +16,7 @@ import {
     getTotalCount,
     getUsers
 } from "../../redux/selectors/users-selectors"
+import {addUserIdMessage} from "../../redux/reducers/dialogs-reducer";
 
 // Класовая компанента
 class UsersAPI extends React.Component {
@@ -54,8 +55,8 @@ class UsersAPI extends React.Component {
                folProg={this.props.folProg}
                unFollowTC={this.props.unFollowTC}
                followTC={this.props.followTC}
-        />
-        </>
+               addUserIdMessage={this.props.addUserIdMessage}
+        /></>
     };
 }
 
@@ -79,7 +80,8 @@ let objectAC = {
     folProgress: toggleIsFollowingAC,
     getUsersTC: getUsersThunkCreator,
     unFollowTC: unFollowThunkCreator,
-    followTC: followThunkCreator
+    followTC: followThunkCreator,
+    addUserIdMessage: addUserIdMessage
 
 };
 

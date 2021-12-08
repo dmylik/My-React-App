@@ -1,7 +1,6 @@
 .dialogModule{
     display: grid;
     grid-template-columns:  3fr 9fr;
-
 }
 
 
@@ -42,17 +41,62 @@ background:rgba(189, 238, 255, 0.67)
 
 }
 
+.ollMessage{
+    /*border: 2px solid #770e7e;*/
+    height: 70%;
+    overflow-y: scroll; /* Добавляем полосы прокрутки */
+
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #3447ff;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #000bb3;
+}
+
+.message{
+    background: #9dd3ff;
+    border-radius: 2em;
+    /*border: 1px solid #7e270e;*/
+    font-size: 16px;
+    padding: 0.5em  0.5em 0.5em 1em;
+    margin: 0.3rem;
+
+
+}
+
 
 .messages{
     padding: 10px;
     background: rgba(189, 238, 255, 0.67);
+    position: relative;
 }
 
 .addMessage{
+    /*border: 2px solid #010f7e;*/
+    width: 70%;
+    position: absolute;
+    bottom: 0;
 
 }
 .textMessage textarea {
-    width: 56%;
+    width: 90%;
     height: 5em;
 
     resize: vertical;
@@ -74,5 +118,5 @@ background:rgba(189, 238, 255, 0.67)
     color:#fff;
     font-weight:600;
     border-radius:5px;
-    width:60%;
+    width:95%;
 }

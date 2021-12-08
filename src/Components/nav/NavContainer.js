@@ -14,14 +14,6 @@ class NavAPI extends React.Component {
         this.props.getUserFriend(19223,2);
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     debugger;
-    //     if(this.props.navPage.profileFriends != prevProps.navPage.profileFriends) {
-    //         console.log(this.props.navPage.profileFriends != prevProps.navPage.profileFriends)
-    //         // this.ollUser()
-    //     }
-    // }
-
     render() {
         return<><Nav navPage = {this.props.navPage}/></>
     }

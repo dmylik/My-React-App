@@ -5,6 +5,7 @@ import {Field, reduxForm} from "redux-form";
 import {Textarea} from "../../basket/FormsControls/FormsControls";
 import {maxLengthCreator, requiredField} from "../../basket/validators/validators";
 import cn from "classnames"
+import Preloader from "../../basket/Preloader/Preloader";
 
 let maxLength =  maxLengthCreator(50);
 
@@ -15,25 +16,36 @@ const Dialogs = React.memo((props) => {
     // let dialogsArray = [...props.dialogsArray].reverse().map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
     // let messagesElement = [...props.messagesElement].reverse().map(m =>  <Message message={m.message} key ={m.id}/> );
 
-    let dialogsArray = [...props.dialogUser].map(d =>
-        <DialogItem name= {d.user.name}
-                    id={d.user.userId}
-                    photo={d.user.small}
-                    dialogId = {props.dialogId}
-                    key ={d.id}
-                    setID = {props.setID}/>);
 
-    let messagesElement = [...props.messagesElement].map(m =>  <Message message={m.message} key ={m.id}/> );
+    let dialogsArray = [];
+    {props.dialogUser.length == 0
+    ? <Preloader/>
+    : dialogsArray = [...props.dialogUser].map(d => {
+            return <DialogItem name= {d.user.name}
+                        id={d.user.userId}
+                        photo={d.user.small}
+                        dialogId = {props.dialogId}
+                        key ={d.user.id}
+                        setID = {props.setID}/>});
 
-    const onSubmit = (formData) =>{props.onSendMessageClick(formData.message);};
+    }
+
+    let UserIdDialog = [...props.UserIdDialog[props.dialogId]].map(m =>  <Message message={m} key ={m}/> );
+
+    const onSubmit = (formData) =>{
+        // props.onSendMessageClick(formData.message);
+        props.addUserMessage( 2, formData.message)};
 
     return (
         <div className={dm.dialogModule}>
+
                 <div className={dm.dialogsItem}>
                     {dialogsArray}
                 </div>
                 <div className={dm.messages}>
-                    <div>{messagesElement}</div>
+                    <div className={dm.ollMessage}>
+                        {UserIdDialog}
+                    </div>
                     <div className={dm.addMessage}>
                         <InputMessageReduxForm  onSubmit={onSubmit}/>
                     </div>
@@ -81,7 +93,9 @@ const  Dialogs1 = (props) => {
                 {dialogsArray}
             </div>
             <div className={dm.messages}>
-                <div>{messagesElement}</div>
+                <div className={dm.ollMessage}>
+                    {messagesElement}
+                </div>
                 <div className={dm.addMessage}>
                     <div>
                         <textarea value={newMessageBody}
@@ -112,6 +126,9 @@ const DialogItem = (props) => {
     )
 };
 
-const Message = (props) => {return <div className={dm.message}>{props.message}</div>};
+const Message = (props) => {
+    return <div className={dm.message}>
+        {props.message}
+    </div>};
 
 export default Dialogs

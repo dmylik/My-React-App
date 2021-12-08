@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import btn from '../../Style/Button.module.css'
 
 // Функциональная (для Контейнерной) компанента
-let User = ({user, folProg, unFollowTC, followTC}) =>{
+let User = ({user, folProg, unFollowTC, followTC, addUserIdMessage}) =>{
     return <div className={styleUM.divRow}>
         <div>
             <div className={styleUM.userImage}>
@@ -35,6 +35,9 @@ let User = ({user, folProg, unFollowTC, followTC}) =>{
                                   onClick={() => {followTC(user.id);}}>
                             UnFollow</button>
                     }
+                        <button className={btn.button} disabled={folProg.some(id => id===user.id)}
+                                onClick={() => {addUserIdMessage(user.id);}}>
+                            Message</button>
                 </div>
                 </div>
 
