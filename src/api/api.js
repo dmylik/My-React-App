@@ -70,3 +70,11 @@ export const loginAPI = {
 export const securityAPI = {
     getCaptchaURL(){return instance.get(`security/get-captcha-url`)}
 };
+
+export const weatherAPI = {
+    getWeatherCity(id){
+        return fetch(`https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=7c3ff516549bbbbcdb03fd9a5319aaef&lang=ru`)
+            .then(response => {return response.json()})
+            .then(data => {return data})
+    }
+}

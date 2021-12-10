@@ -7,6 +7,7 @@ import authReducer from "./reducers/auth-reducer";
 import thunkMiddleware from "redux-thunk"
 import {reducer as formReducer } from 'redux-form'
 import appReducer from "./reducers/app-reducer";
+import weatherReducer from "./reducers/weather-reducer";
 
 // Redux вызов reducers(редьюсеров) файлов
 // название : вызов reducer
@@ -17,6 +18,7 @@ let reducers = combineReducers({
     usersPage: usersReducer,
     authReducer: authReducer,
     app: appReducer,
+    weather: weatherReducer,
     form: formReducer
 });
 

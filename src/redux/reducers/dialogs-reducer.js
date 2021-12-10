@@ -1,4 +1,4 @@
-import {profileAPI} from "../../api/api";
+import {profileAPI, weatherAPI} from "../../api/api";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const SET_USER_DIALOG = 'SET_USER_DIALOG';
@@ -10,7 +10,7 @@ const DIALOG_OLL_USER = 'DIALOG_OLL_USER';
 //Инициализация данных по умолчанию пока небыли переданный другие данные
 let initialState = {
     dialogUser: [],
-    ArrayUserIdToDialog: [19223, 20330, 19788, 20336, 19626, 19348, 2],
+    ArrayUserIdToDialog: [19223, 20330, 19788, 20336, 19626, 19348, 2, 20114],
     dialogId: 2,
     dialogUserUpdate: false,
     UserIdDialog: {
@@ -20,7 +20,8 @@ let initialState = {
         19788: ["19788", "H3i", "Stanislaw"],
         20336: ["20336", "H4i", "Alexandra"],
         19626: ["19626", "H5i", "Alexei"],
-        19348: ["19348", "H6i", "Kirill"]
+        19348: ["19348", "H6i", "Kirill"],
+        20114: ["20114", "H7i", "Maksim"]
     },
     messagesArray: [
         {id: 1, message: 'Hello Pes'},
@@ -52,28 +53,20 @@ const dialogsReducer = (state = initialState, action) => {
             // stateCopy.messagesArray.push({id: 6, message: body});
             // stateCopy.newMessageBody = '';
             return stateCopy;
-        case SET_USER_DIALOG: {
-            let body = action.arrTC;
-            return {
-                ...state, dialogUser: [...state.dialogUser, {user: body}]
-            }
-        }
+        case SET_USER_DIALOG:
+            return {...state, dialogUser: [...state.dialogUser, {user: action.arrTC}]}
         case SET_ID_DIALOG:
             return {...state, dialogId: action.dialogId}
-        case DIALOG_OLL_USER:{
-            console.log(state.UserIdDialog[2])
-            return {...state,
-                UserIdDialog: {...state.UserIdDialog,
-                    [action.UserId]: [
-                    ...state.UserIdDialog[action.UserId], action.messageTxt]}}}
+        case DIALOG_OLL_USER:
+            return {...state, UserIdDialog: {...state.UserIdDialog,
+                    [action.UserId]: [...state.UserIdDialog[action.UserId], action.messageTxt]}}
         case DIALOG_USER_UPDATE:
             return {...state, dialogUserUpdate: action.isUpdate}
         case ADD_USER_MESSAGE:
             return {...state,
-                ArrayUserIdToDialog: [...state.ArrayUserIdToDialog, action.newID]
-            }
-
-
+                UserIdDialog: {...state.UserIdDialog, [action.newID]: ["Hi new Friends"]},
+                ArrayUserIdToDialog: [...state.ArrayUserIdToDialog, action.newID],
+                dialogUser: []}
 
         // stateCopy.newMessageBody = action.textMessageNew;
         // return stateCopy;
@@ -82,7 +75,7 @@ const dialogsReducer = (state = initialState, action) => {
     }
 };
 
-
+// 7c3ff516549bbbbcdb03fd9a5319aaef
 // Если Reducer-е есть нужная команда из action
 // она выполнится и вернет свой state для изменения
 // Если команд не обнаружено, вохвращается state без изменения
@@ -94,18 +87,15 @@ export let setDialogIdCreater = (dialogId) => ({type: SET_ID_DIALOG, dialogId});
 export let addUserIdMessage  = (newID) => ({type: ADD_USER_MESSAGE, newID});
 export let addUserMessageCreater  = (UserId, messageTxt) => ({type: DIALOG_OLL_USER, UserId, messageTxt});
 
-
 export let setDialogUserAC = (arrTC) => {
     return {type: SET_USER_DIALOG, arrTC}
 };
 
 export let getDialogUserThunkCreater = (userID) => async (dispatch) => {
-    let arrayUserM = []
     userID.map(async (id) => {
         let data = await profileAPI.getUserProfile(id);
         dispatch(setDialogUserAC({name: data.fullName, userId: data.userId, small: data.photos.small}))})
-    // dispatch(setDialogUserAC(arrayUserM));
-
 }
+
 
 export default dialogsReducer;

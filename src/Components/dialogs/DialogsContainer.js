@@ -24,13 +24,11 @@ class DialogsAPI extends React.Component{
 
     render() {
         return <Dialogs onSendMessageClick={this.onSendMessageClick}
-                        newMessageBody={this.props.ollMess.newMessageBody}
                         dialogsArray={this.props.ollMess.dialogsArray}
                         UserIdDialog={this.props.ollMess.UserIdDialog}
                         dialogUser={this.props.ollMess.dialogUser}
                         setID={this.setID}
                         dialogId={this.props.dialogId}
-                        isUpdate={this.props.isUpdate}
                         addUserMessage={this.props.addUserMessage}
 
         />
@@ -41,7 +39,6 @@ let mapStateToProps = (state) =>{return {
     ollMess: state.messagesPage,
     dialogId: state.messagesPage.dialogId,
     ArrayUserIdToDialog: state.messagesPage.ArrayUserIdToDialog,
-    isUpdate: state.messagesPage.dialogUserUpdate
 }};
 
 let objectDispatchToProps = {
@@ -49,7 +46,7 @@ let objectDispatchToProps = {
     getDialogUserTC: getDialogUserThunkCreater,
     setDialogId: setDialogIdCreater,
     dialogUserUpdate: dialogUserUpdateCreater,
-    addUserMessage: addUserMessageCreater
+    addUserMessage: addUserMessageCreater,
 };
 
 // compose(

@@ -11,6 +11,7 @@ import store from "./redux/redux-store";
 import NavContainer from "./Components/nav/NavContainer";
 import {withSuspense} from "./hoc/withSuspense";
 import Login from "./Components/login/LoginComponents";
+import WeatherContainer from "./Components/weather/WeatherContainer";
 
 // import NavContainer from "./Components/nav/NavContainer";
 // Пока вызова не будет загружаться эта страница не будет
@@ -48,6 +49,7 @@ class App extends Component {
                         <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
                         <Route path='/users' render={withSuspense(UsersContainer)}/>
                         <Route path='/login' render={() => <Login/>}/>
+                        <Route path='/news' render={() => <WeatherContainer/>}/>
                         <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                     </div>
                 </div>

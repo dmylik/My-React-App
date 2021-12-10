@@ -7,7 +7,7 @@ import {maxLengthCreator, requiredField} from "../../basket/validators/validator
 import cn from "classnames"
 import Preloader from "../../basket/Preloader/Preloader";
 
-let maxLength =  maxLengthCreator(50);
+let maxLength =  maxLengthCreator(200);
 
 
 const Dialogs = React.memo((props) => {
@@ -15,7 +15,6 @@ const Dialogs = React.memo((props) => {
     // использовать нужно капию массива[...props.array].reverse() - мутирующая
     // let dialogsArray = [...props.dialogsArray].reverse().map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
     // let messagesElement = [...props.messagesElement].reverse().map(m =>  <Message message={m.message} key ={m.id}/> );
-
 
     let dialogsArray = [];
     {props.dialogUser.length == 0
@@ -32,9 +31,7 @@ const Dialogs = React.memo((props) => {
 
     let UserIdDialog = [...props.UserIdDialog[props.dialogId]].map(m =>  <Message message={m} key ={m}/> );
 
-    const onSubmit = (formData) =>{
-        // props.onSendMessageClick(formData.message);
-        props.addUserMessage( 2, formData.message)};
+    const onSubmit = (formData) =>{props.addUserMessage( props.dialogId, formData.message)};
 
     return (
         <div className={dm.dialogModule}>
@@ -70,53 +67,12 @@ const InputMessageReduxForm = reduxForm({
 })(InputTextMessage)
 
 
-// Презентационная (функциональная) компонента
-const  Dialogs1 = (props) => {
-    let dialogsArray = props.ollMess.dialogsArray.map(d => <DialogItem name= {d.name} id={d.id} key ={d.id}/>);
-    let messagesElement = props.ollMess.messagesArray.map(m =>  <Message message={m.message} key ={m.id}/> );
-    let newMessageBody =  props.ollMess.newMessageBody;
-
-    let onSendMessageClick = ()=> {
-        props.sendMessage();
-        // props.dispatch(sendMessageCreator())
-    };
-
-    let newMessageElement = (e) =>{
-        let body = e.target.value;
-        props.updateNewMesBody(body);
-        // props.dispatch(updateNewMessageTexeCreator(body));
-    };
-
-    return (
-        <div className={dm.dialogModule}>
-            <div className={dm.dialogsItem}>
-                {dialogsArray}
-            </div>
-            <div className={dm.messages}>
-                <div className={dm.ollMessage}>
-                    {messagesElement}
-                </div>
-                <div className={dm.addMessage}>
-                    <div>
-                        <textarea value={newMessageBody}
-                                  onChange={newMessageElement}
-                                  placeholder='Enter your message'></textarea>
-                    </div>
-                    <div>
-                        <button onClick={onSendMessageClick}>Send Message</button>
-                    </div>
-                </div>
-            </div>
-        </div>)
-
-}
-
 const DialogItem = (props) => {
     return (
-        <div className={cn({[dm.dialogId]: props.dialogId ==  props.id }, dm.dialog) }>
+        <div className={cn({[dm.dialogId]: props.dialogId ==  props.id }, dm.dialog) } onClick={()=>{props.setID(props.id)}}>
             <div className={dm.dialogsImg}>
                 {props.photo != null
-                 ? <img src={props.photo} onClick={()=>{props.setID(props.id)}} />
+                 ? <img src={props.photo}/>
                  : <img src='https://img1.badfon.ru/original/960x800/3/dc/enn-heteuey-anne-hathaway-7419.jpg'/>}
             </div>
             <div className={dm.dialogsName}>
@@ -127,8 +83,10 @@ const DialogItem = (props) => {
 };
 
 const Message = (props) => {
-    return <div className={dm.message}>
-        {props.message}
+    return <div className={dm.divMessage}>
+        <p className={dm.message}>
+            {props.message}
+        </p>
     </div>};
 
 export default Dialogs
