@@ -1,0 +1,15 @@
+.News{
+    display: flex;
+}
+
+
+.Rate {
+    border: #8cffe0 2px solid;
+    padding: 8px;
+    width: 40%;
+}
+
+.Weather {
+    width: 40%;
+    border: #ff582c 2px solid;
+}

@@ -1,4 +1,5 @@
 import * as axios from "axios";
+import React from 'react';
 
 const instance = axios.create({
     withCredentials: true,
@@ -73,8 +74,18 @@ export const securityAPI = {
 
 export const weatherAPI = {
     getWeatherCity(id){
-        return fetch(`https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=7c3ff516549bbbbcdb03fd9a5319aaef&lang=ru`)
+    // &lang=ru
+        return fetch(`https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=7c3ff516549bbbbcdb03fd9a5319aaef`)
             .then(response => {return response.json()})
             .then(data => {return data})
+    }
+}
+
+export const rateAPI = {
+    getRateCity(){
+        return axios.get(`http://api.currencylayer.com/live?access_key=6f818aef5fac86572e3acc93fe69d27b&currencies=EUR,GBP,PLN,RUB,BYN`)
+            .then(response => { return response.data})
+
+
     }
 }

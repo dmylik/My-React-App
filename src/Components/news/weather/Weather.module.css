@@ -1,0 +1,38 @@
+.Weather {
+    padding: 8px;
+    width: 90%;
+}
+
+.Name small{
+    color: #ad0000;
+}
+
+.Name h1{
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    font-size: 3em;
+    color: #000bb3;
+}
+
+.Temp p{
+    font-size: 1.2em;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.Wind{
+
+}
+.Wind img{
+    margin-left: 1em;
+    width: 6em;
+    height: 6em;
+}
+
+.Big{
+    display: flex;
+}
+
+.Big b{
+    font-size: 3.5em;
+}
