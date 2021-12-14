@@ -10,13 +10,16 @@ class WeatherAPI extends React.Component {
     }
 
     render() {return <News weather = {this.props.weather}
-                           rate = {this.props.rate}/>}
+                           rate = {this.props.rate}
+                           currency = {this.props.currency}
+    />}
 }
 
 let mapStateToProps = (state)=> {
     return {
         weather: state.news.weatherCity,
-        rate: state.news.rateUSD
+        rate: state.news.rateUSD,
+        currency: state.news.currency
     }
 }
 

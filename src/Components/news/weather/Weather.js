@@ -1,21 +1,9 @@
 import React from 'react';
 import w from './Weather.module.css'
-import Preloader from "../../../basket/Preloader/Preloader";
 import wind from '../../../assets/windPNG/pngwing.com.png'
+import {convertToDate} from "../../../basket/convert/ConvertToDate";
 
 const Weather = ({weather}) =>{
-    let dataFormat = (timestamp) => {
-        let d = new Date(timestamp * 1000), // Convert the passed timestamp to milliseconds
-            yyyy = d.getFullYear(),
-            mm = ('0' + (d.getMonth() + 1)).slice(-2),  // Months are zero based. Add leading 0.
-            dd = ('0' + d.getDate()).slice(-2),         // Add leading 0.
-            hh = d.getHours(),
-            min = ('0' + d.getMinutes()).slice(-2),     // Add leading 0.
-            time;
-
-        time = `${dd}.${mm}.${yyyy} ${hh}:${min}`;
-        return time;
-    }
     let windWhere = (dec) => {
         if (dec >= 0 && dec < 23) return 'N'
         if (dec >= 23 && dec < 67) return 'NE'
@@ -29,13 +17,10 @@ const Weather = ({weather}) =>{
     }
 
     // https://openweathermap.org/current#current_JSON
-    return <>
-        {weather == undefined
-            ? <Preloader/>
-            : <div className={w.News}>
+    return  <div className={w.News}>
                 <div className={w.Weather}>
                     <div className={w.Name}>
-                        <small>{dataFormat(weather.dt)}</small>
+                        <small>{convertToDate(weather.dt)}</small>
                         <h1>{weather.name}, {weather.sys.country}</h1>
                     </div>
                     <div className={w.Big}>
@@ -53,9 +38,8 @@ const Weather = ({weather}) =>{
                     <div className={w.Wind}>
                         <img src={wind} style={{transform: `rotate(${weather.wind.deg + 180}deg)`}}/>
                     </div>
-
                 </div>
-            </div>}</>
+            </div>
 }
 
 export default Weather

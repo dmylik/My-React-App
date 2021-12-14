@@ -1,0 +1,13 @@
+.Rate h2{
+    font-size: 1.7em;
+    margin-block-end: 0px;
+}
+
+.Rate small{
+    color: #ad0000;
+}
+
+.Number{
+    padding: 1em;
+
+}
