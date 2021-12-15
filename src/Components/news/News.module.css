@@ -4,12 +4,12 @@
 
 
 .Rate {
-    border: #8cffe0 2px solid;
+    /*border: #8cffe0 2px solid;*/
     padding: 8px;
-    width: 40%;
+    width: 50%;
 }
 
 .Weather {
     width: 40%;
-    border: #ff582c 2px solid;
+    /*border: #ff582c 2px solid;*/
 }

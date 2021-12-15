@@ -7,7 +7,57 @@
     color: #ad0000;
 }
 
+.RateData{
+    display: flex;
+}
+
+.Find{
+    /*border: #b3141a 2px solid;*/
+    width: 60%;
+    padding: 1em;
+}
+
+.Find h3{
+    margin-block-end: 0;
+    margin-block-start: 0;
+
+}
+.Find input{
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    font-size: 14px;
+}
+
 .Number{
     padding: 1em;
+    /*border: #000bb3 2px solid;*/
+    width: 30%;
+}
+.Number p{
+    margin-block-start: 0.2em;
+
+}
+
+.FindList{
+    /*border: #000bb3 2px solid;*/
+    width: 95%;
+    margin-left: 1em;
+    /*display: flex;*/
+}
+
+.FindList p {
+    font-size: 14px;
+    margin-block-end: 6px;
+    margin-block-start: 4px;
+}
+
+.FindList img {
+    width: 1.5em;
+    height: 1.5em;
+    float: right;
+
 
 }

@@ -4,7 +4,7 @@ import Weather from "./weather/Weather";
 import Rate from "./rate/Rate";
 import Preloader from "../../basket/Preloader/Preloader";
 
-const News = ({weather, rate, currency}) =>{
+const News = ({weather, rate, currency, setNewRateAC, arrayRate, rateUSD}) =>{
     return <div className={news.News}>
         <div className={news.Weather}>
             {weather == undefined
@@ -16,6 +16,10 @@ const News = ({weather, rate, currency}) =>{
                 ? <Preloader/>
                 :<Rate rate={rate}
                        currency={currency}
+                       setNewRateAC={setNewRateAC}
+                       arrayRate={arrayRate}
+                       rateUSD={rateUSD}
+
                 />}
         </div>
 </div>

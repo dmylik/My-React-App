@@ -82,8 +82,8 @@ export const weatherAPI = {
 }
 
 export const rateAPI = {
-    getRateCity(){
-        return axios.get(`http://api.currencylayer.com/live?access_key=6f818aef5fac86572e3acc93fe69d27b&currencies=EUR,GBP,PLN,RUB,BYN`)
+    getRateCity(arrayRate){
+        return axios.get(`http://api.currencylayer.com/live?access_key=6f818aef5fac86572e3acc93fe69d27b&currencies=${arrayRate.join(',')}`)
             .then(response => { return response.data})
     }
 }
