@@ -2,6 +2,7 @@ import {rateAPI, weatherAPI} from "../../api/api";
 const  WEATHER_CITY = "WEATHER_CITY"
 const  RATE_USD = "RATE_USD"
 const  ADD_RATE_TO_ARRAY = "ADD_RATE_TO_ARRAY"
+const  SET_NEW_WEATER_CITY = "SET_NEW_WEATER_CITY"
 
 let initialState = {
     currency: {
@@ -168,7 +169,8 @@ let initialState = {
         ZMW: "Zambian kwacha",
         ZWL: "Zimbabwean dollar"
     },
-    arrayRate: ["BYN", "RUB", "PLN", "GBP", "EUR"]
+    arrayRate: ["BYN", "RUB", "PLN", "GBP", "EUR"],
+    startCity: 629634
 };
 
 const newsReducer = (state = initialState, action) => {
@@ -176,6 +178,7 @@ const newsReducer = (state = initialState, action) => {
         case WEATHER_CITY: return {...state, weatherCity: action.weather}
         case RATE_USD: return {...state, rateUSD: action.rate}
         case ADD_RATE_TO_ARRAY: return {...state, arrayRate: [...state.arrayRate, action.newRate]}
+        case SET_NEW_WEATER_CITY: return {...state, startCity: action.idCity}
 
         default: return state
     }
@@ -184,6 +187,7 @@ const newsReducer = (state = initialState, action) => {
 export const getWeatherCityAC = (weather) => ({type: WEATHER_CITY, weather})
 export const getRateUSDAC = (rate) => ({type: RATE_USD, rate})
 export const setNewRateAC = (newRate) => ({type: ADD_RATE_TO_ARRAY, newRate})
+export const setNewIdCityAC = (idCity) => ({type: SET_NEW_WEATER_CITY, idCity})
 
 export let weatherCity = (id) => async (dispatch) =>
     dispatch(getWeatherCityAC(await weatherAPI.getWeatherCity(id)))

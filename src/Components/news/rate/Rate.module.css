@@ -48,6 +48,13 @@
     /*display: flex;*/
 }
 
+.FindList i {
+    margin-left: 1em;
+}
+.FindList b {
+
+}
+
 .FindList p {
     font-size: 14px;
     margin-block-end: 6px;
@@ -58,6 +65,4 @@
     width: 1.5em;
     height: 1.5em;
     float: right;
-
-
 }

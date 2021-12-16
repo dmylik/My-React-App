@@ -25,11 +25,11 @@ const Rate = ({rate, currency, setNewRateAC, arrayRate, rateUSD}) => {
     })
 
 
-    if(find.length>1) {
+    if(find.length>2) {
         currencyNew = Object.entries(currency).filter(arr => {
             if (((arr[1].toLowerCase()).indexOf(find.trim().toLowerCase())) > -1) return arr})}
 
-    if(find.length>1)
+    if(find.length>2)
         findRateList = [...currencyNew].map(arr=> {return <FindRateList arr={arr}
                                                                         addRateToList={addRateToList}
                                                                         isAdd={isAdd}/>})
@@ -59,8 +59,9 @@ const Rate = ({rate, currency, setNewRateAC, arrayRate, rateUSD}) => {
 
 const FindRateList = ({arr, addRateToList, isAdd}) => {
     return <div className={rateCss.FindList} >
-        <p><b>{arr[0]}</b>
-            {arr[1]}
+        <p>
+            <b>{arr[0]}</b>
+            <i>{arr[1]}{'\t'}</i>
             {isAdd && <img src={morePng} onClick={()=>{addRateToList(arr[0])}}/>}
         </p>
     </div>

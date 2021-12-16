@@ -36,3 +36,17 @@
 .Big b{
     font-size: 3.5em;
 }
+
+.Find input {
+    width: 55%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.ListCity {
+    cursor: pointer;
+    padding-left: 1em;
+}
